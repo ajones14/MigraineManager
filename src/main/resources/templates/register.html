@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+
+<div class="login">
+    <div class="login-block">
+        <img th:src="@{images/logo.png}" style="border-radius:20px;"/>
+    </div>
+    <div class="login-block">
+        <form method="post">
+        <div class="form-group">
+            <label class="login-label">First Name
+                <input class="form-control" th:field="${registerFormDTO.firstName}" />
+            </label>
+            <p class="error" th:errors="${registerFormDTO.firstName}"></p>
+        </div>
+        <div class="form-group">
+            <label class="login-label">Last Name
+                <input class="form-control" th:field="${registerFormDTO.lastName}" />
+            </label>
+            <p class="error" th:errors="${registerFormDTO.lastName}"></p>
+        </div>
+        <div class="form-group">
+            <label class="login-label">Username
+                <input class="form-control" th:field="${registerFormDTO.username}" />
+            </label>
+            <p class="error" th:errors="${registerFormDTO.username}"></p>
+        </div>
+        <div class="form-group">
+            <label class="login-label">Password
+                <input class="form-control" th:field="${registerFormDTO.password}" type="password" />
+            </label>
+            <p class="error" th:errors="${registerFormDTO.password}"></p>
+        </div>
+        <div class="form-group">
+            <label class="login-label">Verify Password
+                <input class="form-control" th:field="${registerFormDTO.verifyPassword}" type="password" />
+            </label>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Register" />
+    </form>
+        <br>
+        <p>Already have an account? <a href="/login">Login</a></p>
+    </div>
+</div>
+
+</body>
+</html>
