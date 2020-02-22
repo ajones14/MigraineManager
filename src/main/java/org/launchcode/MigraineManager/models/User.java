@@ -10,8 +10,6 @@ import javax.persistence.Id;
 @Entity
 public class User {
 
-//    TODO add a currentWeight field
-
     @Id
     @GeneratedValue
     private int id;
