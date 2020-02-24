@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Triggers<DaysTrigger> {
@@ -16,7 +17,7 @@ public class Triggers<DaysTrigger> {
     private ArrayList<String> addedTriggers;
 
     @OneToMany(mappedBy = "trigger")
-    private ArrayList<DaysTrigger> daysTriggers;
+    private List<DaysTriggers> daysTriggers;
 
     public Triggers() { }
 
