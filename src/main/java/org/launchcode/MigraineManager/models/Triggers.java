@@ -2,32 +2,44 @@ package org.launchcode.MigraineManager.models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Triggers<DaysTrigger> {
+public class Triggers {
 
     @Id
     private int userId;
 
-    private static ArrayList<String> defaultTriggers;
+    private List<LocalDate> datesOccurred = new ArrayList<>();
 
-    private ArrayList<String> addedTriggers;
-
-    @OneToMany(mappedBy = "trigger")
-    private List<DaysTriggers> daysTriggers;
+    private String name;
 
     public Triggers() { }
 
-    public Triggers(int userId, ArrayList<String> addedTriggers) {
+    public Triggers(int userId, String name) {
         this.userId = userId;
-        this.addedTriggers = addedTriggers;
+        this.name = name;
     }
 
-    public Triggers(int userId) {
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
+    public List<LocalDate> getDatesOccurred() {
+        return datesOccurred;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

@@ -3,7 +3,9 @@ package org.launchcode.MigraineManager.models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Symptoms {
@@ -11,30 +13,27 @@ public class Symptoms {
     @Id
     private int userId;
 
-    private static ArrayList<String> defaultSymptoms;
+    private List<LocalDate> datesOccurred = new ArrayList<>();
 
-    private ArrayList<String> addedSymptoms;
+    private String name;
 
     public Symptoms() { }
 
-    public Symptoms(int userId, ArrayList<String> addedSymptoms) {
+    public Symptoms(int userId, String name) {
         this.userId = userId;
-        this.addedSymptoms = addedSymptoms;
+        this.name = name;
     }
 
-    public Symptoms(int userId) {
-        this.userId = userId;
+    public List<LocalDate> getDatesOccurred() {
+        return datesOccurred;
     }
 
-    public ArrayList<String> getAllSymptoms() {
-        ArrayList<String> result = new ArrayList<>();
-        result.addAll(this.defaultSymptoms);
-        result.addAll(this.addedSymptoms);
-        return result;
+    public String getName() {
+        return name;
     }
 
-    public ArrayList<String> getDefaultSymptoms() {
-        return defaultSymptoms;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getUserId() {
@@ -45,11 +44,4 @@ public class Symptoms {
         this.userId = userId;
     }
 
-    public ArrayList<String> getAddedSymptoms() {
-        return addedSymptoms;
-    }
-
-    public void setAddedSymptoms(ArrayList<String> addedSymptoms) {
-        this.addedSymptoms = addedSymptoms;
-    }
 }
