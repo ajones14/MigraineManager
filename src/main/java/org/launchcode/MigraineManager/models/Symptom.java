@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Symptom {
@@ -28,7 +27,7 @@ public class Symptom {
         this.name = name;
     }
 
-    public List<LocalDate> getDatesOccurred() {
+    public ArrayList<LocalDate> getDatesOccurred() {
         return datesOccurred;
     }
 

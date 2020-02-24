@@ -6,24 +6,6 @@ body {
   color: red;
 }
 
-.mealLabel {
-    display: inline;
-    text-align: left;
-    margin: 0px;
-    font-size: 1.25rem;
-    font-weight: 500;
-    line-height: 1.2;
-    margin-block-start: 1.67em;
-    margin-block-end: 1.67em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-}
-
-.mealHeading {
-    padding: 6px;
-    left-padding: 0px;
-}
-
 .btn-small {
     padding: 0px 6px;
 }
@@ -33,27 +15,16 @@ body {
     display: inline;
 }
 
-.col-xs-6 {
-    border: thin solid grey;
-    width: 33.333333%;
-    display: inline-block;
-}
-
-#snack {
-    width: 100%;
-}
-
 #headerBanner {
     width: 100%;
     text-align: center;
-    background-color: rgb(190, 252, 254, 0.5);
+    background-image: radial-gradient(circle, white 50%, #99ccff);
 }
 
 #headingPic {
     margin: 3px;
-    height: 10%;
-    width: 10%;
-    border-radius: 10px;
+    height: 30%;
+    width: 30%;
 }
 
 .login {

@@ -3,11 +3,12 @@ package org.launchcode.MigraineManager.models;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 @Entity
+@Table(name = "`trigger`")
 public class Trigger {
 
     @Id
@@ -22,7 +23,7 @@ public class Trigger {
 
     public Trigger () { }
 
-    public Trigger (int userId, String name) {
+    public Trigger (String name) {
         this.userId = userId;
         this.name = name;
     }
