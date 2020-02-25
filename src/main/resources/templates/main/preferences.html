@@ -29,6 +29,28 @@
             </div>
             <input type="submit" class="btn btn-primary" value="Update Password" />
         </form>
+    </div><br>
+    <div class="login-block">
+        <form method="post" action="?changeFirstName">
+            <div class="form-group">
+                <label class="login-label">Change FirstName
+                    <input class="form-control" th:field="${preferencesFormDTO.firstName}" />
+                </label>
+                <p class="error" th:errors="${preferencesFormDTO.firstName}"></p>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Update First Name" />
+        </form>
+    </div><br>
+    <div class="login-block">
+        <form method="post" action="?changeLastName">
+            <div class="form-group">
+                <label class="login-label">Change Last Name
+                    <input class="form-control" th:field="${preferencesFormDTO.lastName}" />
+                </label>
+                <p class="error" th:errors="${preferencesFormDTO.lastName}"></p>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Update Last Name" />
+        </form>
     </div>
 </div>
 

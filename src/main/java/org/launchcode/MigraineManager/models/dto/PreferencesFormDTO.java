@@ -8,6 +8,10 @@ public class PreferencesFormDTO {
 
     private String verifyPassword;
 
+    private String firstName;
+
+    private String lastName;
+
     public String getUsername() {
         return username;
     }
@@ -30,5 +34,21 @@ public class PreferencesFormDTO {
 
     public void setVerifyPassword(String verifyPassword) {
         this.verifyPassword = verifyPassword;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }
