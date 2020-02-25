@@ -3,6 +3,20 @@
 <head th:replace="fragments :: head"></head>
 <body>
 <header th:replace="fragments :: header"></header>
-<p>You've made it to the preferences page!!</p>
+
+<div class="login">
+    <div class="login-block">
+        <form method="post" action="?changeUsername">
+            <div class="form-group">
+                <label class="login-label">Change Username
+                    <input class="form-control" th:field="${preferencesFormDTO.username}" />
+                </label>
+                <p class="error" th:errors="${preferencesFormDTO.username}"></p>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Update" />
+        </form>
+    </div>
+</div>
+
 </body>
 </html>

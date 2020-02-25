@@ -53,6 +53,18 @@ public class User {
         return lastName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public boolean isMatchingPassword(String password) {
         return encoder.matches(password, pwHash);
     }
