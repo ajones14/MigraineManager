@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SymptomRepository extends CrudRepository<Symptom, Integer> {
+
+    Iterable<Symptom> findAllByUserId(int userId);
+
 }

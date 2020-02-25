@@ -3,6 +3,10 @@
 <head th:replace="fragments :: head"></head>
 <body>
 <header th:replace="fragments :: header"></header>
-<p>You've made it to the symptoms page!!</p>
+
+<ul th:each="symptom : ${symptomList}">
+    <p th:text="${symptom}"></p>
+</ul>
+
 </body>
 </html>
