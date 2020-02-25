@@ -13,7 +13,21 @@
                 </label>
                 <p class="error" th:errors="${preferencesFormDTO.username}"></p>
             </div>
-            <input type="submit" class="btn btn-primary" value="Update" />
+            <input type="submit" class="btn btn-primary" value="Update Username" />
+        </form>
+    </div><br>
+    <div class="login-block">
+        <form method="post" action="?changePassword">
+            <div class="form-group">
+                <label class="login-label">Change Password
+                    <input class="form-control" th:field="${preferencesFormDTO.password}" type="password" />
+                </label><br>
+                <label class="login-label">Verify Password
+                    <input class="form-control" th:field="${preferencesFormDTO.verifyPassword}" type="password" />
+                </label>
+                <p class="error" th:errors="${preferencesFormDTO.password}"></p>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Update Password" />
         </form>
     </div>
 </div>

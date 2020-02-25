@@ -69,4 +69,8 @@ public class User {
         return encoder.matches(password, pwHash);
     }
 
+    public void setNewPassword(String password) {
+        this.pwHash = encoder.encode(password);
+    }
+
 }

@@ -33,7 +33,7 @@ public class PreferencesController {
     }
 
     @PostMapping(params = "changeUsername")
-    public String processPreferencesForm(HttpSession session, @ModelAttribute @Valid PreferencesFormDTO preferencesFormDTO, Errors errors) {
+    public String processChangeUsernameForm(HttpSession session, @ModelAttribute @Valid PreferencesFormDTO preferencesFormDTO, Errors errors) {
         User existingUser = userRepository.findByUsername(preferencesFormDTO.getUsername());
         User currentUser = authenticationController.getUserFromSession(session);
         if (existingUser != null) {
@@ -42,7 +42,21 @@ public class PreferencesController {
         }
         currentUser.setUsername(preferencesFormDTO.getUsername());
         userRepository.save(currentUser);
-        session.setAttribute("user", currentUser.getId());
+        return "redirect:/preferences";
+    }
+
+    @PostMapping(params = "changePassword")
+    public String processChangePasswordForm(HttpSession session, @ModelAttribute @Valid PreferencesFormDTO preferencesFormDTO, Errors errors) {
+        User currentUser = authenticationController.getUserFromSession(session);
+
+        String password = preferencesFormDTO.getPassword();
+        String verifyPassword = preferencesFormDTO.getVerifyPassword();
+        if (!password.equals(verifyPassword)) {
+            errors.rejectValue("password", "passwords.mismatch", "Passwords do not match");
+            return "main/preferences";
+        }
+        currentUser.setNewPassword(preferencesFormDTO.getPassword());
+        userRepository.save(currentUser);
         return "redirect:/preferences";
     }
 
