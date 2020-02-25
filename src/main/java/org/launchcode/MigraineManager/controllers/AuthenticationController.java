@@ -1,6 +1,8 @@
 package org.launchcode.MigraineManager.controllers;
 
+import org.launchcode.MigraineManager.data.SymptomRepository;
 import org.launchcode.MigraineManager.data.UserRepository;
+import org.launchcode.MigraineManager.models.Symptom;
 import org.launchcode.MigraineManager.models.User;
 import org.launchcode.MigraineManager.models.dto.LoginFormDTO;
 import org.launchcode.MigraineManager.models.dto.RegisterFormDTO;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Optional;
 
 
@@ -22,7 +25,10 @@ import java.util.Optional;
 public class AuthenticationController {
 
     @Autowired
-    UserRepository userRepository;
+    private SymptomRepository symptomRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     private static final String userSessionKey = "user";
 
@@ -77,6 +83,14 @@ public class AuthenticationController {
         User newUser = new User(registerFormDTO.getFirstName(), registerFormDTO.getLastName(), registerFormDTO.getUsername(), registerFormDTO.getPassword());
         userRepository.save(newUser);
         setUserInSession(request.getSession(), newUser);
+
+        String[] list = new String[]{"Aura", "Confusion", "Difficulty speaking", "Dizziness", "Eye pain",
+                "Fatigue", "Light sensitivity", "Nausea"};
+        for (int i = 0; i < list.length; i++) {
+            Symptom symptom = new Symptom(newUser.getId(), list[i]);
+            symptomRepository.save(symptom);
+        }
+
         return "redirect:/home";
     }
 

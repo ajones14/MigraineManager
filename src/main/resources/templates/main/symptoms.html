@@ -5,7 +5,7 @@
 <header th:replace="fragments :: header"></header>
 
 <ul th:each="symptom : ${symptomList}">
-    <p th:text="${symptom}"></p>
+    <p th:text="${symptom.getName()}"></p>
 </ul>
 
 </body>
