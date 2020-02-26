@@ -4,9 +4,20 @@
 <body>
 <header th:replace="fragments :: header"></header>
 
-<ul th:each="symptom : ${symptomList}">
-    <p th:text="${symptom.getName()}"></p>
+<ul class="list-group">
+    <li class="list-group-item"  th:each="symptom : ${symptomList}" th:text="${symptom.getName()}"></li>
 </ul>
+<div class="login-block">
+    <form method="post" action="?addSymptom">
+        <div class="form-group">
+            <label class="login-label">Add Symptom
+                <input class="form-control" th:field="${symptom.name}"/>
+            </label>
+            <p class="error" th:errors="${symptom.name}"></p>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Update" />
+    </form>
+</div>
 
 </body>
 </html>

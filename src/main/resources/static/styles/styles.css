@@ -49,6 +49,12 @@ body {
     text-align: left;
 }
 
-ul {
-    background-color:
+.list-group {
+    width: 30%;
+    margin: 20px;
 }
+
+.list-group-item {
+    background-color: #ccffff;
+}
+
