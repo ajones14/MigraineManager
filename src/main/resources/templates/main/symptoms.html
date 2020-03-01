@@ -3,10 +3,18 @@
 <head th:replace="fragments :: head"></head>
 <body>
 <header th:replace="fragments :: header"></header>
+<!--TODO add form-row and form-column classes to align buttons to the side -->
+<form method="post" action="?deleteSymptom">
+    <ul class="list-group">
+        <!--    <li class="list-group-item"  th:each="symptom : ${symptomList}" th:text="${symptom.getName()}"></li>-->
+        <li><a href="#" class="list-group-item list-group-item-action" th:each="symptom : ${symptomList}" th:field="${symptom.name}" th:text="${symptom.name}"></a></li>
+    </ul>
+<!--    <p class="error" th:errors="${delete}"></p>-->
+<!--    TODO add confirmation popup to confirm user really wants to delete selected item(s)-->
+    <input type="submit" class="btn btn-primary" value="Delete Selected" />
+</form>
+<p th:text="${selected}">test</p>
 
-<ul class="list-group">
-    <li class="list-group-item"  th:each="symptom : ${symptomList}" th:text="${symptom.getName()}"></li>
-</ul>
 <div class="login-block">
     <form method="post" action="?addSymptom">
         <div class="form-group">
