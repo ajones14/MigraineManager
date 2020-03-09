@@ -40,8 +40,7 @@ public class PreferencesController {
         if (username.isEmpty()) {
             errors.rejectValue("username", "field.empty", "Please enter a username");
             return "main/preferences";
-        }
-        if (existingUser != null) {
+        } else if (existingUser != null) {
             errors.rejectValue("username", "username.alreadyexists", "A user with that username already exists");
             return "main/preferences";
         }
@@ -59,8 +58,7 @@ public class PreferencesController {
         if (password.isEmpty()) {
             errors.rejectValue("password", "passwords.empty", "Please enter a password");
             return "main/preferences";
-        }
-        if (!password.equals(verifyPassword)) {
+        } else if (!password.equals(verifyPassword)) {
             errors.rejectValue("password", "passwords.mismatch", "Passwords do not match");
             return "main/preferences";
         }
