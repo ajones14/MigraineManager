@@ -3,6 +3,29 @@
 <head th:replace="fragments :: head"></head>
 <body>
 <header th:replace="fragments :: header"></header>
-<p>You've made it to the triggers page!!</p>
+<!--TODO add form-row and form-column classes to align buttons to the side -->
+<form method="post" action="?deleteTrigger" class="leftDiv" id="deleteForm">
+    <ul class="list-group">
+        <li id="hiddenList" class="list-group-item" th:each="trigger : ${triggerList}">
+            <input class="checkbox" type="checkbox" th:id="${trigger.getName()}" th:name="resultList" th:value="${trigger.getName()}"/>
+            <label class="list-group-item" th:for="${trigger.getName()}" th:text="${trigger.getName()}"></label>
+        </li>
+    </ul>
+    <!--    TODO add confirmation popup to confirm user really wants to delete selected item(s)-->
+    <div class="rightDiv"><input type="submit" class="btn btn-primary" value="Delete Selected" onclick="return confirm('Permanently delete these items?');" /></div>
+</form>
+<div class="rightDiv" style="width: 50%;">
+    <div class="login-block">
+        <form method="post" action="?addTrigger">
+            <div class="form-group">
+                <label class="login-label">Add Trigger
+                    <input class="form-control" th:field="${trigger.name}"/>
+                </label>
+                <p class="error" th:errors="${trigger.name}"></p>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Update" />
+        </form>
+    </div>
+</div>
 </body>
 </html>

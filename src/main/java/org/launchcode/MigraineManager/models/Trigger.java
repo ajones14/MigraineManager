@@ -23,7 +23,7 @@ public class Trigger {
 
     public Trigger () { }
 
-    public Trigger (String name) {
+    public Trigger (int userId, String name) {
         this.userId = userId;
         this.name = name;
     }

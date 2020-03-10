@@ -1,8 +1,10 @@
 package org.launchcode.MigraineManager.controllers;
 
 import org.launchcode.MigraineManager.data.SymptomRepository;
+import org.launchcode.MigraineManager.data.TriggerRepository;
 import org.launchcode.MigraineManager.data.UserRepository;
 import org.launchcode.MigraineManager.models.Symptom;
+import org.launchcode.MigraineManager.models.Trigger;
 import org.launchcode.MigraineManager.models.User;
 import org.launchcode.MigraineManager.models.dto.LoginFormDTO;
 import org.launchcode.MigraineManager.models.dto.RegisterFormDTO;
@@ -17,12 +19,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.Optional;
 
 
 @Controller
 public class AuthenticationController {
+
+    @Autowired
+    private TriggerRepository triggerRepository;
 
     @Autowired
     private SymptomRepository symptomRepository;
@@ -84,11 +88,18 @@ public class AuthenticationController {
         userRepository.save(newUser);
         setUserInSession(request.getSession(), newUser);
 
-        String[] list = new String[]{"Aura", "Confusion", "Difficulty speaking", "Dizziness", "Eye pain",
+        String[] symptomList = new String[]{"Aura", "Confusion", "Difficulty speaking", "Dizziness", "Eye pain",
                 "Fatigue", "Light sensitivity", "Nausea"};
-        for (int i = 0; i < list.length; i++) {
-            Symptom symptom = new Symptom(newUser.getId(), list[i]);
+        for (int i = 0; i < symptomList.length; i++) {
+            Symptom symptom = new Symptom(newUser.getId(), symptomList[i]);
             symptomRepository.save(symptom);
+        }
+
+        String[] triggerList = new String[]{"Suger", "Stress", "Dehydration", "Weather Changes", "Aspartame",
+                "Sleep Deprivation", "Alcohol", "Caffeine", "Menstruation", "PMS"};
+        for (int i = 0; i < triggerList.length; i++) {
+            Trigger trigger = new Trigger(newUser.getId(), triggerList[i]);
+            triggerRepository.save(trigger);
         }
 
         return "redirect:/home";

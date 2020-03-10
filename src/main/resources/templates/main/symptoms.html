@@ -4,7 +4,7 @@
 <body>
 <header th:replace="fragments :: header"></header>
 <!--TODO add form-row and form-column classes to align buttons to the side -->
-<form method="post" action="?deleteSymptom" class="leftDiv">
+<form method="post" action="?deleteSymptom" class="leftDiv" id="deleteForm">
     <ul class="list-group">
         <li id="hiddenList" class="list-group-item" th:each="symptom : ${symptomList}">
             <input class="checkbox" type="checkbox" th:id="${symptom.getName()}" th:name="resultList" th:value="${symptom.getName()}"/>
@@ -12,7 +12,7 @@
         </li>
     </ul>
     <!--    TODO add confirmation popup to confirm user really wants to delete selected item(s)-->
-    <div class="rightDiv"><input type="submit" class="btn btn-primary" value="Delete Selected" /></div>
+    <div class="rightDiv"><input type="submit" class="btn btn-primary" value="Delete Selected" onclick="return confirm('Permanently delete these items?');" /></div>
 </form>
 <div class="rightDiv" style="width: 50%;">
 <div class="login-block">
