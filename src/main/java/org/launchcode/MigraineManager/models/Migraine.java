@@ -21,8 +21,6 @@ public class Migraine {
 
     private LocalDateTime endTime;
 
-    private ArrayList<String> symptoms;
-
     @NotNull
     private int userId;
 
@@ -52,14 +50,6 @@ public class Migraine {
 
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
-    }
-
-    public ArrayList<String> getSymptoms() {
-        return symptoms;
-    }
-
-    public void setSymptoms(ArrayList<String> symptoms) {
-        this.symptoms = symptoms;
     }
 
     public int getUserId() {

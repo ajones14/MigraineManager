@@ -28,7 +28,7 @@ public class SymptomsController {
     @GetMapping
     public String displaySymptoms(Model model, HttpSession session) {
         User currentUser = authenticationController.getUserFromSession(session);
-        model.addAttribute("symptomList", symptomRepository.findAllByUserId(currentUser.getId()));
+//        model.addAttribute("symptomList", symptomRepository.findAllByUserId(currentUser.getId()));
         model.addAttribute(new Symptom());
         List<Symptom> symptomList = symptomRepository.findAllByUserId(currentUser.getId());
         symptomList.sort(Comparator.comparing(Symptom::getName));
@@ -66,7 +66,7 @@ public class SymptomsController {
             List<Symptom> symptomList = symptomRepository.findAllByUserId(currentUser.getId());
 
             if (resultList == null || resultList.isEmpty()) {
-                return "main/symptoms";
+                return "redirect:/symptoms";
             }
 
             for (String result : resultList) {

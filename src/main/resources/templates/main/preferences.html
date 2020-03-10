@@ -19,6 +19,7 @@
     <div class="login-block">
         <form method="post" action="?changePassword">
             <div class="form-group">
+<!--                TODO add validation for old password-->
                 <label class="login-label">Change Password
                     <input class="form-control" th:field="${preferencesFormDTO.password}" type="password" />
                 </label><br>
@@ -33,7 +34,7 @@
     <div class="login-block">
         <form method="post" action="?changeFirstName">
             <div class="form-group">
-                <label class="login-label">Change FirstName
+                <label class="login-label">Change First Name
                     <input class="form-control" th:field="${preferencesFormDTO.firstName}" />
                 </label>
                 <p class="error" th:errors="${preferencesFormDTO.firstName}"></p>
