@@ -3,17 +3,16 @@ package org.launchcode.MigraineManager.controllers;
 import org.launchcode.MigraineManager.data.SymptomRepository;
 import org.launchcode.MigraineManager.models.Symptom;
 import org.launchcode.MigraineManager.models.User;
-import org.launchcode.MigraineManager.models.dto.LoginFormDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
 
 @Controller
 @RequestMapping("symptoms")
@@ -28,8 +27,9 @@ public class SymptomsController {
     @GetMapping
     public String displaySymptoms(Model model, HttpSession session) {
         User currentUser = authenticationController.getUserFromSession(session);
-//        model.addAttribute("symptomList", symptomRepository.findAllByUserId(currentUser.getId()));
+
         model.addAttribute(new Symptom());
+
         List<Symptom> symptomList = symptomRepository.findAllByUserId(currentUser.getId());
         symptomList.sort(Comparator.comparing(Symptom::getName));
         model.addAttribute("symptomList", symptomList);

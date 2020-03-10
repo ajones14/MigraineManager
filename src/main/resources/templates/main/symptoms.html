@@ -4,16 +4,17 @@
 <body>
 <header th:replace="fragments :: header"></header>
 <!--TODO add form-row and form-column classes to align buttons to the side -->
-<form method="post" action="?deleteSymptom">
-    <div th:each="symptom : ${symptomList}" >
-        <input type="checkbox" th:name="resultList" th:value="${symptom.getName()}"/>
-        <label th:for="${symptom.getName()}" th:text="${symptom.getName()}"></label>
-    </div>
-<!--    <p class="error" th:errors="${symptom.name}"></p>-->
-<!--    TODO add confirmation popup to confirm user really wants to delete selected item(s)-->
-    <input type="submit" class="btn btn-primary" value="Delete Selected" />
+<form method="post" action="?deleteSymptom" class="leftDiv">
+    <ul class="list-group">
+        <li id="hiddenList" class="list-group-item" th:each="symptom : ${symptomList}">
+            <input class="checkbox" type="checkbox" th:id="${symptom.getName()}" th:name="resultList" th:value="${symptom.getName()}"/>
+            <label class="list-group-item" th:for="${symptom.getName()}" th:text="${symptom.getName()}"></label>
+        </li>
+    </ul>
+    <!--    TODO add confirmation popup to confirm user really wants to delete selected item(s)-->
+    <div class="rightDiv"><input type="submit" class="btn btn-primary" value="Delete Selected" /></div>
 </form>
-
+<div class="rightDiv" style="width: 50%;">
 <div class="login-block">
     <form method="post" action="?addSymptom">
         <div class="form-group">
@@ -25,6 +26,6 @@
         <input type="submit" class="btn btn-primary" value="Update" />
     </form>
 </div>
-
+</div>
 </body>
 </html>
