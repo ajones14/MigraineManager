@@ -82,6 +82,11 @@ body {
     margin: 0px;
 }
 
+#hiddenList2 {
+    padding: 0px;
+    margin: 0px;
+}
+
 .rightDiv {
     display: inline-block;
     margin: 0;

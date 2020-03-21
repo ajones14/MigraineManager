@@ -73,4 +73,23 @@ public class HomeController {
         return "main/home";
     };
 
+    @GetMapping(value = "home/backward/{date}")
+    public String backwardDate(@PathVariable("date") String date, Model model, HttpSession session) {
+        User currentUser = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", currentUser);
+
+        List<Symptom> symptomList = symptomRepository.findAllByUserId(currentUser.getId());
+        symptomList.sort(Comparator.comparing(Symptom::getName));
+        model.addAttribute("symptomList", symptomList);
+
+        List<Trigger> triggerList = triggerRepository.findAllByUserId(currentUser.getId());
+        triggerList.sort(Comparator.comparing(Trigger::getName));
+        model.addAttribute("triggerList", triggerList);
+
+        LocalDate newDate = LocalDate.parse(date, formatter);
+        newDate = newDate.minusDays(1);
+        model.addAttribute("date", newDate.format(formatter));
+        return "main/home";
+    };
+
 }

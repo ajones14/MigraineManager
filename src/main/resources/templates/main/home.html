@@ -10,10 +10,32 @@
     <p th:text="'Welcome, ' + ${user.firstName}" id="greeting">Welcome</p><br>
 
     <div id="dateDiv">
-        <a href="/home" class="arrow"><span class="fa fa-arrow-left" id="Larrow"></span></a>
+        <a th:href="@{/home/backward/{date}(date = ${date})}" class="arrow"><span class="fa fa-arrow-left" id="Larrow"></span></a>
         <p th:text="${date}" id="date"></p>
         <a th:href="@{/home/forward/{date}(date = ${date})}" class="arrow"><span class="fa fa-arrow-right" id="Rarrow"></span></a>
     </div>
+
+    <form method="post" action="?addTrigger" class="leftDiv" id="addTriggerForm">
+        <ul class="list-group">
+            <li id="hiddenList" class="list-group-item" th:each="trigger : ${triggerList}">
+                <input class="checkbox" type="checkbox" th:id="${trigger.getName()}" th:name="resultList" th:value="${trigger.getName()}"/>
+                <label class="list-group-item" th:for="${trigger.getName()}" th:text="${trigger.getName()}"></label>
+            </li>
+        </ul>
+        <!--    TODO add confirmation popup to confirm user really wants to delete selected item(s)-->
+        <div class="rightDiv"><input type="submit" class="btn btn-primary" value="Save Triggers" /></div>
+    </form>
+
+    <form method="post" action="?addSymptom" class="rightDiv" id="addSymptomForm">
+        <ul class="list-group">
+            <li id="hiddenList2" class="list-group-item" th:each="symptom : ${symptomList}">
+                <input class="checkbox" type="checkbox" th:id="${symptom.getName()}" th:name="resultList" th:value="${symptom.getName()}"/>
+                <label class="list-group-item" th:for="${symptom.getName()}" th:text="${symptom.getName()}"></label>
+            </li>
+        </ul>
+        <!--    TODO add confirmation popup to confirm user really wants to delete selected item(s)-->
+        <div class="rightDiv"><input type="submit" class="btn btn-primary" value="Save Symptoms" /></div>
+    </form>
 
 </body>
 </html>
