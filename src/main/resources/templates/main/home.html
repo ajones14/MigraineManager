@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head"></head>
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <div th:replace="fragments :: head"></div>
+</head>
 <body>
     <header th:replace="fragments :: header"></header>
 
-    <p>You've made it to the home page!!</p>
+    <p th:text="'Welcome, ' + ${user.firstName}" id="greeting">Welcome</p><br>
+
+    <div id="dateDiv">
+        <a href="/home" class="arrow"><span class="fa fa-arrow-left" id="Larrow"></span></a>
+        <p th:text="${date}" id="date"></p>
+        <a th:href="@{/home/forward/{date}(date = ${date})}" class="arrow"><span class="fa fa-arrow-right" id="Rarrow"></span></a>
+    </div>
+
 </body>
 </html>

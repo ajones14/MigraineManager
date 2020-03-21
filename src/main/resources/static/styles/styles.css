@@ -97,3 +97,42 @@ body {
     float: left;
 }
 
+#greeting {
+    font-color: #214352;
+    font-size: 30px;
+    font-family: 'Roboto', sans-serif;
+    float: right;
+    margin: 10px;
+    margin-right: 20px;
+}
+
+#date {
+    font-size: 30px;
+    font-family: 'Roboto', sans-serif;
+    display: inline-block;
+    margin: 10px;
+    vertical-align: middle;
+}
+
+#Larrow, #Rarrow {
+    display: inline;
+    margin: 10px;
+    vertical-align: middle;
+}
+
+#dateDiv {
+    text-align: center;
+    width: 100%;
+    display: inline-block;
+}
+
+.arrow {
+    text-decoration: none;
+    color: black;
+}
+
+.arrow:hover {
+    color: #2b586b;
+    text-decoration: none;
+}
+

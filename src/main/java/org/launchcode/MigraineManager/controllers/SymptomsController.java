@@ -40,7 +40,7 @@ public class SymptomsController {
     public String processAddSymptomForm(HttpSession session, @ModelAttribute @Valid Symptom symptom, Errors errors, Model model) {
         User currentUser = authenticationController.getUserFromSession(session);
         symptom.setUserId(currentUser.getId());
-
+        //TODO check that symptom doesnt already exhist
         List<Symptom> symptomList = symptomRepository.findAllByUserId(currentUser.getId());
         symptomList.sort(Comparator.comparing(Symptom::getName));
         model.addAttribute("symptomList", symptomList);

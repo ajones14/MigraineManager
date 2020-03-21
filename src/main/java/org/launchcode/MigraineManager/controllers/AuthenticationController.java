@@ -88,6 +88,7 @@ public class AuthenticationController {
         userRepository.save(newUser);
         setUserInSession(request.getSession(), newUser);
 
+        // set default symptomList for new User
         String[] symptomList = new String[]{"Aura", "Confusion", "Difficulty speaking", "Dizziness", "Eye pain",
                 "Fatigue", "Light sensitivity", "Nausea"};
         for (int i = 0; i < symptomList.length; i++) {
@@ -95,7 +96,8 @@ public class AuthenticationController {
             symptomRepository.save(symptom);
         }
 
-        String[] triggerList = new String[]{"Suger", "Stress", "Dehydration", "Weather Changes", "Aspartame",
+        // set default triggerList for new User
+        String[] triggerList = new String[]{"Sugar", "Stress", "Dehydration", "Weather Changes", "Aspartame",
                 "Sleep Deprivation", "Alcohol", "Caffeine", "Menstruation", "PMS"};
         for (int i = 0; i < triggerList.length; i++) {
             Trigger trigger = new Trigger(newUser.getId(), triggerList[i]);

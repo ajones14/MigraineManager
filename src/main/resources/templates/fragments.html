@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head th:fragment="head">
-    <meta charset="UTF-8"/>
-    <title>Migraine Manager</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript" th:src="@{/js/script.js}"></script>
-    <link rel="stylesheet" th:href="@{/styles/styles.css}">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<head>
+    <div th:fragment="head" th:remove="tag">
+        <meta charset="UTF-8"/>
+        <title>Migraine Manager</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" th:href="@{/styles/styles.css}">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    </div>
 </head>
 <body>
 <!--TODO fix body styling so background doesn't repeat when scrolling-->
 <header th:fragment="header">
     <div id="headerBanner">
-        <img id="headingPic" th:src="@{images/MMLogo2.png}">
+        <img id="headingPic" th:src="@{/images/MMLogo2.png}">
     </div>
 <!--    TODO insert a first name customized greeting-->
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #54809E;">
