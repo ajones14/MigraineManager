@@ -55,8 +55,31 @@ public class HomeController {
         return "main/home";
     }
 
+    @PostMapping
+    public String processSaveTriggerFormToday(HttpSession session, @RequestParam(value = "resultList", required = false) List<String> resultList, Model model) {
+        User currentUser = authenticationController.getUserFromSession(session);
+        List<Trigger> triggerList = triggerRepository.findAllByUserId(currentUser.getId());
+        LocalDate now = LocalDate.now();
+
+        if (resultList == null || resultList.isEmpty()) {
+            return "redirect:/home";
+        }
+
+        for (String result : resultList) {
+            for (Trigger trigger : triggerList) {
+                if (result.equals(trigger.getName())) {
+                    trigger.addDateOccurred(now);
+                    triggerRepository.save(trigger);
+                    System.out.println(trigger.getDatesOccurred());
+                }
+            }
+        }
+
+        return "redirect:/home";
+    }
+
     @GetMapping(value = "{date}")
-    public String forwardDate(@PathVariable("date") String date, Model model, HttpSession session) {
+    public String scrollDate(@PathVariable("date") String date, Model model, HttpSession session) {
         User currentUser = authenticationController.getUserFromSession(session);
         model.addAttribute("user", currentUser);
 
@@ -75,26 +98,27 @@ public class HomeController {
         return "main/home";
     };
 
-    @PostMapping(value = "forward/{date}", params = "addTrigger")
-    public String processAddTriggerForm(HttpSession session, @RequestParam(value = "resultList", required = false) List<String> resultList) {
+    @PostMapping(value = "{date}")
+    public String processSaveTriggerForm(HttpSession session, @PathVariable("date") String date, @RequestParam(value = "resultList", required = false) List<String> resultList, Model model) {
         User currentUser = authenticationController.getUserFromSession(session);
         List<Trigger> triggerList = triggerRepository.findAllByUserId(currentUser.getId());
-        LocalDate now = LocalDate.now();
+        LocalDate newDate = LocalDate.parse(date, formatter);
 
         if (resultList == null || resultList.isEmpty()) {
-            return "redirect:/triggers";
+            return "redirect:/home/{date}";
         }
 
         for (String result : resultList) {
             for (Trigger trigger : triggerList) {
                 if (result.equals(trigger.getName())) {
-                    trigger.addDateOccurred(now);
+                    trigger.addDateOccurred(newDate);
+                    triggerRepository.save(trigger);
                     System.out.println(trigger.getDatesOccurred());
                 }
             }
         }
 
-        return "redirect:/home";
+        return "redirect:/home/{date}";
     }
 
 }
