@@ -9,8 +9,7 @@ import org.launchcode.MigraineManager.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
@@ -19,6 +18,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @Controller
+@RequestMapping("home")
 public class HomeController {
 
     @Autowired
@@ -35,7 +35,7 @@ public class HomeController {
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-uuuu");
 
-    @GetMapping(value = "home")
+    @GetMapping
     public String displayHome(Model model, HttpSession session) {
         User currentUser = authenticationController.getUserFromSession(session);
         model.addAttribute("user", currentUser);
@@ -50,11 +50,12 @@ public class HomeController {
 
         LocalDate now = LocalDate.now();
         model.addAttribute("date", now.format(formatter));
-        model.addAttribute("test", "test");
+        model.addAttribute("forwardDate", now.plusDays(1).format(formatter));
+        model.addAttribute("backwardDate", now.minusDays(1).format(formatter));
         return "main/home";
     }
 
-    @GetMapping(value = "home/forward/{date}")
+    @GetMapping(value = "{date}")
     public String forwardDate(@PathVariable("date") String date, Model model, HttpSession session) {
         User currentUser = authenticationController.getUserFromSession(session);
         model.addAttribute("user", currentUser);
@@ -68,28 +69,32 @@ public class HomeController {
         model.addAttribute("triggerList", triggerList);
 
         LocalDate newDate = LocalDate.parse(date, formatter);
-        newDate = newDate.plusDays(1);
-        model.addAttribute("date", newDate.format(formatter));
+        model.addAttribute("date", date);
+        model.addAttribute("forwardDate", newDate.plusDays(1).format(formatter));
+        model.addAttribute("backwardDate", newDate.minusDays(1).format(formatter));
         return "main/home";
     };
 
-    @GetMapping(value = "home/backward/{date}")
-    public String backwardDate(@PathVariable("date") String date, Model model, HttpSession session) {
+    @PostMapping(value = "forward/{date}", params = "addTrigger")
+    public String processAddTriggerForm(HttpSession session, @RequestParam(value = "resultList", required = false) List<String> resultList) {
         User currentUser = authenticationController.getUserFromSession(session);
-        model.addAttribute("user", currentUser);
-
-        List<Symptom> symptomList = symptomRepository.findAllByUserId(currentUser.getId());
-        symptomList.sort(Comparator.comparing(Symptom::getName));
-        model.addAttribute("symptomList", symptomList);
-
         List<Trigger> triggerList = triggerRepository.findAllByUserId(currentUser.getId());
-        triggerList.sort(Comparator.comparing(Trigger::getName));
-        model.addAttribute("triggerList", triggerList);
+        LocalDate now = LocalDate.now();
 
-        LocalDate newDate = LocalDate.parse(date, formatter);
-        newDate = newDate.minusDays(1);
-        model.addAttribute("date", newDate.format(formatter));
-        return "main/home";
-    };
+        if (resultList == null || resultList.isEmpty()) {
+            return "redirect:/triggers";
+        }
+
+        for (String result : resultList) {
+            for (Trigger trigger : triggerList) {
+                if (result.equals(trigger.getName())) {
+                    trigger.addDateOccurred(now);
+                    System.out.println(trigger.getDatesOccurred());
+                }
+            }
+        }
+
+        return "redirect:/home";
+    }
 
 }

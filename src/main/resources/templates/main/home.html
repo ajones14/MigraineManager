@@ -10,9 +10,10 @@
     <p th:text="'Welcome, ' + ${user.firstName}" id="greeting">Welcome</p><br>
 
     <div id="dateDiv">
-        <a th:href="@{/home/backward/{date}(date = ${date})}" class="arrow"><span class="fa fa-arrow-left" id="Larrow"></span></a>
+        <a th:href="@{/home/{date}(date = ${backwardDate})}" class="arrow"><span class="fa fa-arrow-left" id="Larrow"></span></a>
         <p th:text="${date}" id="date"></p>
-        <a th:href="@{/home/forward/{date}(date = ${date})}" class="arrow"><span class="fa fa-arrow-right" id="Rarrow"></span></a>
+<!--        TODO add and subtract day before creating url-->
+        <a th:href="@{/home/{date}(date = ${forwardDate})}" class="arrow"><span class="fa fa-arrow-right" id="Rarrow"></span></a>
     </div>
 
     <form method="post" action="?addTrigger" class="leftDiv" id="addTriggerForm">
@@ -22,7 +23,6 @@
                 <label class="list-group-item" th:for="${trigger.getName()}" th:text="${trigger.getName()}"></label>
             </li>
         </ul>
-        <!--    TODO add confirmation popup to confirm user really wants to delete selected item(s)-->
         <div class="rightDiv"><input type="submit" class="btn btn-primary" value="Save Triggers" /></div>
     </form>
 

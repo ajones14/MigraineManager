@@ -13,7 +13,6 @@
             <label class="list-group-item" th:for="${trigger.getName()}" th:text="${trigger.getName()}"></label>
         </li>
     </ul>
-    <!--    TODO add confirmation popup to confirm user really wants to delete selected item(s)-->
     <div class="rightDiv"><input type="submit" class="btn btn-primary" value="Delete Selected" onclick="return confirm('Permanently delete these items?');" /></div>
 </form>
 <div class="rightDiv" style="width: 50%;">
