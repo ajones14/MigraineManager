@@ -31,6 +31,10 @@ public class Symptom {
         return datesOccurred;
     }
 
+    public void addDateOccurred(LocalDate date) {
+        this.datesOccurred.add(date);
+    }
+
     public String getName() {
         return name;
     }

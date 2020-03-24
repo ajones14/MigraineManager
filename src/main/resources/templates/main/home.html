@@ -26,7 +26,7 @@
         <div class="rightDiv"><input type="submit" class="btn btn-primary" value="Save Triggers" /></div>
     </form>
 
-    <form method="post" action="?addSymptom" class="rightDiv" id="addSymptomForm">
+    <form method="post" th:action="@{/home/{date}/saveSymptoms(date=${date})}" class="rightDiv" id="addSymptomForm">
         <ul class="list-group">
             <li id="hiddenList2" class="list-group-item" th:each="symptom : ${symptomList}">
                 <input class="checkbox" type="checkbox" th:id="${symptom.getName()}" th:name="resultList" th:value="${symptom.getName()}"/>

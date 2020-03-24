@@ -64,7 +64,7 @@ public class HomeController {
     };
 
     @PostMapping(value = "{date}/saveTriggers")
-    public String processSaveTriggerForm(HttpSession session, @PathVariable("date") String date, @RequestParam(value = "resultList", required = false) List<String> resultList, Model model) {
+    public String processSaveTriggerForm(HttpSession session, @PathVariable("date") String date, @RequestParam(value = "resultList", required = false) List<String> resultList) {
         User currentUser = authenticationController.getUserFromSession(session);
         List<Trigger> triggerList = triggerRepository.findAllByUserId(currentUser.getId());
         LocalDate newDate = LocalDate.parse(date, formatter);
@@ -79,6 +79,29 @@ public class HomeController {
                     trigger.addDateOccurred(newDate);
                     triggerRepository.save(trigger);
                     System.out.println(trigger.getDatesOccurred());
+                }
+            }
+        }
+
+        return "redirect:/home/{date}";
+    }
+
+    @PostMapping(value = "{date}/saveSymptoms")
+    public String processSaveSymptomForm(HttpSession session, @PathVariable("date") String date, @RequestParam(value = "resultList", required = false) List<String> resultList) {
+        User currentUser = authenticationController.getUserFromSession(session);
+        List<Symptom> symptomList = symptomRepository.findAllByUserId(currentUser.getId());
+        LocalDate newDate = LocalDate.parse(date, formatter);
+
+        if (resultList == null || resultList.isEmpty()) {
+            return "redirect:/home/{date}";
+        }
+
+        for (String result : resultList) {
+            for (Symptom symptom : symptomList) {
+                if (result.equals(symptom.getName())) {
+                    symptom.addDateOccurred(newDate);
+                    symptomRepository.save(symptom);
+                    System.out.println(symptom.getDatesOccurred());
                 }
             }
         }
