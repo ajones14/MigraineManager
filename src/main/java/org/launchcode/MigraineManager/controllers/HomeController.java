@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
@@ -36,46 +37,10 @@ public class HomeController {
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-uuuu");
 
     @GetMapping
-    public String displayHome(Model model, HttpSession session) {
-        User currentUser = authenticationController.getUserFromSession(session);
-        model.addAttribute("user", currentUser);
-
-        List<Symptom> symptomList = symptomRepository.findAllByUserId(currentUser.getId());
-        symptomList.sort(Comparator.comparing(Symptom::getName));
-        model.addAttribute("symptomList", symptomList);
-
-        List<Trigger> triggerList = triggerRepository.findAllByUserId(currentUser.getId());
-        triggerList.sort(Comparator.comparing(Trigger::getName));
-        model.addAttribute("triggerList", triggerList);
-
+    public String displayHome(RedirectAttributes redirectAttributes) {
         LocalDate now = LocalDate.now();
-        model.addAttribute("date", now.format(formatter));
-        model.addAttribute("forwardDate", now.plusDays(1).format(formatter));
-        model.addAttribute("backwardDate", now.minusDays(1).format(formatter));
-        return "main/home";
-    }
-
-    @PostMapping
-    public String processSaveTriggerFormToday(HttpSession session, @RequestParam(value = "resultList", required = false) List<String> resultList, Model model) {
-        User currentUser = authenticationController.getUserFromSession(session);
-        List<Trigger> triggerList = triggerRepository.findAllByUserId(currentUser.getId());
-        LocalDate now = LocalDate.now();
-
-        if (resultList == null || resultList.isEmpty()) {
-            return "redirect:/home";
-        }
-
-        for (String result : resultList) {
-            for (Trigger trigger : triggerList) {
-                if (result.equals(trigger.getName())) {
-                    trigger.addDateOccurred(now);
-                    triggerRepository.save(trigger);
-                    System.out.println(trigger.getDatesOccurred());
-                }
-            }
-        }
-
-        return "redirect:/home";
+        redirectAttributes.addAttribute("date", now.format(formatter));
+        return "redirect:/home/{date}";
     }
 
     @GetMapping(value = "{date}")
@@ -98,7 +63,7 @@ public class HomeController {
         return "main/home";
     };
 
-    @PostMapping(value = "{date}")
+    @PostMapping(value = "{date}/saveTriggers")
     public String processSaveTriggerForm(HttpSession session, @PathVariable("date") String date, @RequestParam(value = "resultList", required = false) List<String> resultList, Model model) {
         User currentUser = authenticationController.getUserFromSession(session);
         List<Trigger> triggerList = triggerRepository.findAllByUserId(currentUser.getId());
