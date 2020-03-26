@@ -12,14 +12,14 @@
     <div id="dateDiv">
         <a th:href="@{/home/{date}(date = ${backwardDate})}" class="arrow"><span class="fa fa-arrow-left" id="Larrow"></span></a>
         <p th:text="${date}" id="date"></p>
-<!--        TODO add and subtract day before creating url-->
         <a th:href="@{/home/{date}(date = ${forwardDate})}" class="arrow"><span class="fa fa-arrow-right" id="Rarrow"></span></a>
     </div>
 
     <form method="post" th:action="@{/home/{date}/saveTriggers(date=${date})}" class="leftDiv" id="addTriggerForm">
         <ul class="list-group">
             <li id="hiddenList" class="list-group-item" th:each="trigger : ${triggerList}">
-                <input class="checkbox" type="checkbox" th:id="${trigger.getName()}" th:name="resultList" th:value="${trigger.getName()}"/>
+                <input class="checkbox" type="checkbox" th:id="${trigger.getName()}" th:name="resultList"
+                       th:value="${trigger.getName()}" th:checked="${savedTriggers.contains(trigger)}"/>
                 <label class="list-group-item" th:for="${trigger.getName()}" th:text="${trigger.getName()}"></label>
             </li>
         </ul>
@@ -33,7 +33,6 @@
                 <label class="list-group-item" th:for="${symptom.getName()}" th:text="${symptom.getName()}"></label>
             </li>
         </ul>
-        <!--    TODO add confirmation popup to confirm user really wants to delete selected item(s)-->
         <div class="rightDiv"><input type="submit" class="btn btn-primary" value="Save Symptoms" /></div>
     </form>
 

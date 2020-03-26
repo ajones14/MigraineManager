@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -47,6 +48,7 @@ public class HomeController {
     public String scrollDate(@PathVariable("date") String date, Model model, HttpSession session) {
         User currentUser = authenticationController.getUserFromSession(session);
         model.addAttribute("user", currentUser);
+        LocalDate newDate = LocalDate.parse(date, formatter);
 
         List<Symptom> symptomList = symptomRepository.findAllByUserId(currentUser.getId());
         symptomList.sort(Comparator.comparing(Symptom::getName));
@@ -56,7 +58,14 @@ public class HomeController {
         triggerList.sort(Comparator.comparing(Trigger::getName));
         model.addAttribute("triggerList", triggerList);
 
-        LocalDate newDate = LocalDate.parse(date, formatter);
+        List<Trigger> savedTriggers = new ArrayList<>();
+        for (Trigger trigger : triggerList) {
+            if (trigger.getDatesOccurred().contains(newDate)) {
+                savedTriggers.add(trigger);
+            }
+        }
+
+        model.addAttribute("savedTriggers", savedTriggers);
         model.addAttribute("date", date);
         model.addAttribute("forwardDate", newDate.plusDays(1).format(formatter));
         model.addAttribute("backwardDate", newDate.minusDays(1).format(formatter));
@@ -70,16 +79,21 @@ public class HomeController {
         LocalDate newDate = LocalDate.parse(date, formatter);
 
         if (resultList == null || resultList.isEmpty()) {
+            for (Trigger trigger : triggerList) {
+                if (trigger.getDatesOccurred().contains(newDate)) {
+                    trigger.removeDateOccurred(newDate);
+                    triggerRepository.save(trigger);
+                }
+            }
             return "redirect:/home/{date}";
         }
-
-        for (String result : resultList) {
-            for (Trigger trigger : triggerList) {
-                if (result.equals(trigger.getName())) {
-                    trigger.addDateOccurred(newDate);
-                    triggerRepository.save(trigger);
-                    System.out.println(trigger.getDatesOccurred());
-                }
+        for (Trigger trigger : triggerList) {
+            if (resultList.contains(trigger.getName()) && !(trigger.getDatesOccurred().contains(newDate))) {
+                trigger.addDateOccurred(newDate);
+                triggerRepository.save(trigger);
+            } else if (!resultList.contains(trigger.getName()) && trigger.getDatesOccurred().contains(newDate)) {
+                trigger.removeDateOccurred(newDate);
+                triggerRepository.save(trigger);
             }
         }
 
@@ -101,7 +115,6 @@ public class HomeController {
                 if (result.equals(symptom.getName())) {
                     symptom.addDateOccurred(newDate);
                     symptomRepository.save(symptom);
-                    System.out.println(symptom.getDatesOccurred());
                 }
             }
         }
