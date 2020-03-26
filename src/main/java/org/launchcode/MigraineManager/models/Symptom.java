@@ -35,6 +35,10 @@ public class Symptom {
         this.datesOccurred.add(date);
     }
 
+    public void removeDateOccurred(LocalDate date) {
+        this.datesOccurred.remove(date);
+    }
+
     public String getName() {
         return name;
     }

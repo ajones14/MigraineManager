@@ -65,7 +65,15 @@ public class HomeController {
             }
         }
 
+        List<Symptom> savedSymptoms = new ArrayList<>();
+        for (Symptom symptom : symptomList) {
+            if (symptom.getDatesOccurred().contains(newDate)) {
+                savedSymptoms.add(symptom);
+            }
+        }
+
         model.addAttribute("savedTriggers", savedTriggers);
+        model.addAttribute("savedSymptoms", savedSymptoms);
         model.addAttribute("date", date);
         model.addAttribute("forwardDate", newDate.plusDays(1).format(formatter));
         model.addAttribute("backwardDate", newDate.minusDays(1).format(formatter));
@@ -107,15 +115,21 @@ public class HomeController {
         LocalDate newDate = LocalDate.parse(date, formatter);
 
         if (resultList == null || resultList.isEmpty()) {
-            return "redirect:/home/{date}";
-        }
-
-        for (String result : resultList) {
             for (Symptom symptom : symptomList) {
-                if (result.equals(symptom.getName())) {
-                    symptom.addDateOccurred(newDate);
+                if (symptom.getDatesOccurred().contains(newDate)) {
+                    symptom.removeDateOccurred(newDate);
                     symptomRepository.save(symptom);
                 }
+            }
+            return "redirect:/home/{date}";
+        }
+        for (Symptom symptom : symptomList) {
+            if (resultList.contains(symptom.getName()) && !(symptom.getDatesOccurred().contains(newDate))) {
+                symptom.addDateOccurred(newDate);
+                symptomRepository.save(symptom);
+            } else if (!resultList.contains(symptom.getName()) && symptom.getDatesOccurred().contains(newDate)) {
+                symptom.removeDateOccurred(newDate);
+                symptomRepository.save(symptom);
             }
         }
 

@@ -29,7 +29,8 @@
     <form method="post" th:action="@{/home/{date}/saveSymptoms(date=${date})}" class="rightDiv" id="addSymptomForm">
         <ul class="list-group">
             <li id="hiddenList2" class="list-group-item" th:each="symptom : ${symptomList}">
-                <input class="checkbox" type="checkbox" th:id="${symptom.getName()}" th:name="resultList" th:value="${symptom.getName()}"/>
+                <input class="checkbox" type="checkbox" th:id="${symptom.getName()}" th:name="resultList"
+                       th:value="${symptom.getName()}" th:checked="${savedSymptoms.contains(symptom)}"/>
                 <label class="list-group-item" th:for="${symptom.getName()}" th:text="${symptom.getName()}"></label>
             </li>
         </ul>
