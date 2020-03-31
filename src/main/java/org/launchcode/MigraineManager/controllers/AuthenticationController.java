@@ -1,11 +1,7 @@
 package org.launchcode.MigraineManager.controllers;
 
-import org.launchcode.MigraineManager.data.SymptomRepository;
-import org.launchcode.MigraineManager.data.TriggerRepository;
-import org.launchcode.MigraineManager.data.UserRepository;
-import org.launchcode.MigraineManager.models.Symptom;
-import org.launchcode.MigraineManager.models.Trigger;
-import org.launchcode.MigraineManager.models.User;
+import org.launchcode.MigraineManager.data.*;
+import org.launchcode.MigraineManager.models.*;
 import org.launchcode.MigraineManager.models.dto.LoginFormDTO;
 import org.launchcode.MigraineManager.models.dto.RegisterFormDTO;
 import org.springframework.beans.factory.annotation.Autowired;

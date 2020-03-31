@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 @Entity
 public class Migraine {
@@ -26,9 +25,7 @@ public class Migraine {
 
     public Migraine () {}
 
-    public Migraine(LocalDateTime startTime, LocalDateTime endTime, int userId) {
-        this.startTime = startTime;
-        this.endTime = endTime;
+    public Migraine(int userId) {
         this.userId = userId;
     }
 

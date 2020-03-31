@@ -1,11 +1,7 @@
 package org.launchcode.MigraineManager.controllers;
 
-import org.launchcode.MigraineManager.data.MigraineRepository;
-import org.launchcode.MigraineManager.data.SymptomRepository;
-import org.launchcode.MigraineManager.data.TriggerRepository;
-import org.launchcode.MigraineManager.models.Symptom;
-import org.launchcode.MigraineManager.models.Trigger;
-import org.launchcode.MigraineManager.models.User;
+import org.launchcode.MigraineManager.data.*;
+import org.launchcode.MigraineManager.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,6 +45,19 @@ public class HomeController {
         User currentUser = authenticationController.getUserFromSession(session);
         model.addAttribute("user", currentUser);
         LocalDate newDate = LocalDate.parse(date, formatter);
+
+        List<Migraine> migraineList = migraineRepository.findAllByUserId(currentUser.getId());
+        if (migraineList == null || migraineList.isEmpty()) {
+            model.addAttribute("migraine", new Migraine(currentUser.getId()));
+        } else {
+            for (Migraine migraine : migraineList) {
+                if (migraine.getEndTime() == null) {
+                    model.addAttribute("migraine", migraine);
+                } else {
+                    model.addAttribute("migraine", new Migraine(currentUser.getId()));
+                }
+            }
+        }
 
         List<Symptom> symptomList = symptomRepository.findAllByUserId(currentUser.getId());
         symptomList.sort(Comparator.comparing(Symptom::getName));

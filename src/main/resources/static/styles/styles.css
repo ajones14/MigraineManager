@@ -141,3 +141,9 @@ body {
     text-decoration: none;
 }
 
+#migraineButton {
+    display: inline-block;
+    float: center;
+    margin: 0 auto;
+}
+

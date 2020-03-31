@@ -2,6 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <script th:inline="javascript">
+        let migraine = [[${migraine}]];
+    </script>
+    <script th:inline="javascript" th:src="@{/js/script.js}"></script>
     <div th:replace="fragments :: head"></div>
 </head>
 <body>
@@ -25,6 +29,8 @@
         </ul>
         <div class="rightDiv"><input type="submit" class="btn btn-primary" value="Save Triggers" /></div>
     </form>
+
+    <button id="migraineButton" class="btn btn-info">Start Recording Migraine</button>
 
     <form method="post" th:action="@{/home/{date}/saveSymptoms(date=${date})}" class="rightDiv" id="addSymptomForm">
         <ul class="list-group">
