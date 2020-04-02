@@ -29,6 +29,11 @@ public class Migraine {
         this.userId = userId;
     }
 
+    public Migraine(int userId, LocalDateTime startTime) {
+        this.userId = userId;
+        this.startTime = startTime;
+    }
+
     public int getId () {
         return id;
     }

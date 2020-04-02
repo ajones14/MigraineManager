@@ -1,7 +1,12 @@
 package org.launchcode.MigraineManager.controllers;
 
-import org.launchcode.MigraineManager.data.*;
-import org.launchcode.MigraineManager.models.*;
+import org.launchcode.MigraineManager.data.MigraineRepository;
+import org.launchcode.MigraineManager.data.SymptomRepository;
+import org.launchcode.MigraineManager.data.TriggerRepository;
+import org.launchcode.MigraineManager.models.Migraine;
+import org.launchcode.MigraineManager.models.Symptom;
+import org.launchcode.MigraineManager.models.Trigger;
+import org.launchcode.MigraineManager.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +15,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -17,6 +24,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("home")
+@SessionAttributes("migraine")
 public class HomeController {
 
     @Autowired
@@ -48,13 +56,14 @@ public class HomeController {
 
         List<Migraine> migraineList = migraineRepository.findAllByUserId(currentUser.getId());
         if (migraineList == null || migraineList.isEmpty()) {
-            model.addAttribute("migraine", new Migraine(currentUser.getId()));
+            session.setAttribute("migraine", new Migraine());
         } else {
             for (Migraine migraine : migraineList) {
                 if (migraine.getEndTime() == null) {
                     model.addAttribute("migraine", migraine);
                 } else {
-                    model.addAttribute("migraine", new Migraine(currentUser.getId()));
+                    session.setAttribute("migraine", new Migraine());
+                    model.addAttribute("migraine", null);
                 }
             }
         }
@@ -88,6 +97,31 @@ public class HomeController {
         model.addAttribute("backwardDate", newDate.minusDays(1).format(formatter));
         return "main/home";
     };
+
+    @PostMapping(value = "{date}")
+    public String startMigraine(@PathVariable("date") String date, @ModelAttribute("migraine") Migraine migraine, Model model, HttpSession session) {
+        User currentUser = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", currentUser);
+        LocalDate newDate = LocalDate.parse(date, formatter);
+        LocalTime currentTime = LocalTime.now();
+        LocalDateTime startOrEndTime = newDate.atTime(currentTime);
+
+        if (migraine == null) {
+            Migraine newMigraine = new Migraine(currentUser.getId(), startOrEndTime);
+            migraineRepository.save(newMigraine);
+            return "redirect:/home/{date}";
+        } else if (migraine.getStartTime() == null) {
+            migraine.setUserId(currentUser.getId());
+            migraine.setStartTime(startOrEndTime);
+            migraineRepository.save(migraine);
+            return "redirect:/home/{date}";
+        } else {
+            migraine.setEndTime(startOrEndTime);
+            migraineRepository.save(migraine);
+            session.removeAttribute("migraine");
+            return "redirect:/home/{date}";
+        }
+    }
 
     @PostMapping(value = "{date}/saveTriggers")
     public String processSaveTriggerForm(HttpSession session, @PathVariable("date") String date, @RequestParam(value = "resultList", required = false) List<String> resultList) {
