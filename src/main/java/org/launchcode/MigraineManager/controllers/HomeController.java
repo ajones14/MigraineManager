@@ -102,15 +102,11 @@ public class HomeController {
     public String startMigraine(@PathVariable("date") String date, @ModelAttribute("migraine") Migraine migraine, Model model, HttpSession session) {
         User currentUser = authenticationController.getUserFromSession(session);
         model.addAttribute("user", currentUser);
-        LocalDate newDate = LocalDate.parse(date, formatter);
+        LocalDate newDate = LocalDate.now();;
         LocalTime currentTime = LocalTime.now();
         LocalDateTime startOrEndTime = newDate.atTime(currentTime);
 
-        if (migraine == null) {
-            Migraine newMigraine = new Migraine(currentUser.getId(), startOrEndTime);
-            migraineRepository.save(newMigraine);
-            return "redirect:/home/{date}";
-        } else if (migraine.getStartTime() == null) {
+       if (migraine.getStartTime() == null) {
             migraine.setUserId(currentUser.getId());
             migraine.setStartTime(startOrEndTime);
             migraineRepository.save(migraine);

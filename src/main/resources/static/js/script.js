@@ -1,12 +1,11 @@
 function init () {
 
-    let migraineButton = document.getElementById("migraineButton");
+    let startMigraineButton = document.getElementById("startMigraineButton");
     let endMigraineButton = document.getElementById("endMigraineButton");
 
     if (!(Object.values(migraine)[1] == null)) {
-        migraineButton.disabled = true;
-    } else {
-        endMigraineButton.disabled = true;
+        startMigraineButton.disabled = true;
+        endMigraineButton.disabled = false;
     }
 
     countUpFromTime(Object.values(migraine)[1], 'countup1');

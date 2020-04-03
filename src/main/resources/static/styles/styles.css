@@ -141,38 +141,46 @@ body {
     text-decoration: none;
 }
 
-#migraineButton {
+#startMigraineButton, #endMigraineButton {
     display: inline-block;
     float: center;
     margin: 0 auto;
+    width: 130px;
 }
 
-#migraineButton, #endMigraineButton {
-    width: 130px;
+.migraineButton {
+    display: inline-block;
+    float: center;
 }
 
 #centerDiv {
     display: inline-block;
+    width: 30%;
+    text-align: center;
+    margin-top: 15px;
 }
 
 .countup {
   text-align: center;
   margin-bottom: 20px;
 }
+
 .countup .timeel {
   display: inline-block;
   padding: 10px;
   background: #151515;
   margin: 0;
+  margin-top: 10px;
   color: white;
   min-width: 2.6rem;
   margin-left: 13px;
   border-radius: 10px 0 0 10px;
 }
+
 .countup span[class*="timeRef"] {
   border-radius: 0 10px 10px 0;
   margin-left: 0;
-  background: #e8c152;
+  background: #95b8bf;
   color: black;
 }
 

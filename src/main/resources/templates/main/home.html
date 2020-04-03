@@ -31,20 +31,20 @@
     </form>
 
     <div id="centerDiv">
-        <form method="post" th:action="@{/home/{date}(date=${date})}">
+        <form class="migraineButton" method="post" th:action="@{/home/{date}(date=${date})}">
             <input hidden="hidden" th:name="migraine" th:value="${migraine}"/>
-            <input type="submit" id="migraineButton" class="btn btn-info" value="Start Migraine">
+            <input type="submit" id="startMigraineButton" class="btn btn-info" value="Start Migraine">
         </form>
-        <form method="post" th:action="@{/home/{date}(date=${date})}">
+        <form class="migraineButton" method="post" th:action="@{/home/{date}(date=${date})}">
             <input hidden="hidden" th:name="migraine" th:value="${migraine}"/>
-            <input type="submit" id="endMigraineButton" class="btn btn-info" value="End Migraine">
+            <input disabled="true" type="submit" id="endMigraineButton" class="btn btn-info" value="End Migraine">
         </form>
 
         <div class="countup" id="countup1">
             <span class="timeel days">00</span>
             <span class="timeel timeRefDays">days</span>
             <span class="timeel hours">00</span>
-            <span class="timeel timeRefHours">hours</span>
+            <span class="timeel timeRefHours">hours</span><br>
             <span class="timeel minutes">00</span>
             <span class="timeel timeRefMinutes">minutes</span>
             <span class="timeel seconds">00</span>
