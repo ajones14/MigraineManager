@@ -4,6 +4,7 @@
     <div th:replace="fragments :: head"></div>
     <script th:inline="javascript">
         var triggerLabels = [[${triggerLabels}]];
+        var symptomLabels = [[${symptomLabels}]];
     </script>
     <script th:src="@{/js/statsScript.js}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>

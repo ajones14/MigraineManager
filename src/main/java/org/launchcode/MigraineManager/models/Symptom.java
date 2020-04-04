@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 @Entity
 public class Symptom {
@@ -26,6 +27,15 @@ public class Symptom {
         this.userId = userId;
         this.name = name;
     }
+
+    public static Comparator<Symptom> SymptomDateComparator = new Comparator<Symptom>() {
+        @Override
+        public int compare(Symptom o1, Symptom o2) {
+            int first = o1.datesOccurred.size();
+            int second = o2.datesOccurred.size();
+            return second-first;
+        }
+    };
 
     public ArrayList<LocalDate> getDatesOccurred() {
         return datesOccurred;

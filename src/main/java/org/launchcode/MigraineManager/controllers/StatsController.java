@@ -39,7 +39,6 @@ public class StatsController {
         User currentUser = authenticationController.getUserFromSession(session);
 
         List<Trigger> triggerList = triggerRepository.findAllByUserId(currentUser.getId());
-        //replace below with something that sorts by most frequent
         Collections.sort(triggerList, Trigger.TriggerDateComparator);
         model.addAttribute("triggerList", triggerList);
         List<String> triggerLabels = new ArrayList<>();
@@ -49,8 +48,13 @@ public class StatsController {
         model.addAttribute("triggerLabels", triggerLabels);
 
         List<Symptom> symptomList = symptomRepository.findAllByUserId(currentUser.getId());
-//        symptomList.sort(Comparator.comparing(Symptom::getName));
+        Collections.sort(symptomList, Symptom.SymptomDateComparator);
         model.addAttribute("symptomList", symptomList);
+        List<String> symptomLabels = new ArrayList<>();
+        for (Symptom symptom : symptomList) {
+            symptomLabels.add(symptom.getName());
+        }
+        model.addAttribute("symptomLabels", symptomLabels);
 
         List<Migraine> migraineList = migraineRepository.findAllByUserId(currentUser.getId());
         model.addAttribute("migraineList", migraineList);
