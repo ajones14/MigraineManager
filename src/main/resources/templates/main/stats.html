@@ -2,9 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
     <div th:replace="fragments :: head"></div>
+    <script th:inline="javascript" th:src="@{/js/statsScript.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 </head>
 <body>
 <header th:replace="fragments :: header"></header>
-<p>You've made it to the stats page!!</p>
+<div class="col-md-5">
+    <canvas id="myChart" width="400" height="400"></canvas>
+</div>
+
 </body>
 </html>
