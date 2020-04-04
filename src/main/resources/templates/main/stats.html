@@ -4,16 +4,26 @@
     <div th:replace="fragments :: head"></div>
     <script th:inline="javascript">
         var triggerLabels = [[${triggerLabels}]];
+        var triggerData = [[${triggerData}]];
         var symptomLabels = [[${symptomLabels}]];
+        var symptomData = [[${symptomData}]];
     </script>
     <script th:src="@{/js/statsScript.js}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 </head>
 <body>
 <header th:replace="fragments :: header"></header>
-<div class="col-md-5">
-    <canvas id="myChart" height="200px"></canvas>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <canvas id="triggerChart" height="160px" width="230px"></canvas>
+        </div>
+        <div class="col-sm">
+            <canvas id="symptomChart" height="160px" width="230px"></canvas>
+        </div>
+    </div>
 </div>
+
 
 </body>
 </html>

@@ -42,19 +42,29 @@ public class StatsController {
         Collections.sort(triggerList, Trigger.TriggerDateComparator);
         model.addAttribute("triggerList", triggerList);
         List<String> triggerLabels = new ArrayList<>();
+        List<Integer> triggerData  = new ArrayList<>();
         for (Trigger trigger : triggerList) {
-            triggerLabels.add(trigger.getName());
+            if (trigger.getDatesOccurred().size() != 0) {
+                triggerLabels.add(trigger.getName());
+                triggerData.add(trigger.getDatesOccurred().size());
+            }
         }
+        model.addAttribute("triggerData", triggerData);
         model.addAttribute("triggerLabels", triggerLabels);
 
         List<Symptom> symptomList = symptomRepository.findAllByUserId(currentUser.getId());
         Collections.sort(symptomList, Symptom.SymptomDateComparator);
         model.addAttribute("symptomList", symptomList);
         List<String> symptomLabels = new ArrayList<>();
+        List<Integer> symptomData = new ArrayList<>();
         for (Symptom symptom : symptomList) {
-            symptomLabels.add(symptom.getName());
+            if (symptom.getDatesOccurred().size() != 0) {
+                symptomLabels.add(symptom.getName());
+                symptomData.add(symptom.getDatesOccurred().size());
+            }
         }
         model.addAttribute("symptomLabels", symptomLabels);
+        model.addAttribute("symptomData", symptomData);
 
         List<Migraine> migraineList = migraineRepository.findAllByUserId(currentUser.getId());
         model.addAttribute("migraineList", migraineList);
