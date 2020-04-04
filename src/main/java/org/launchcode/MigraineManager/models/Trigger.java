@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 @Entity
 @Table(name = "`trigger`")
@@ -27,6 +28,15 @@ public class Trigger {
         this.userId = userId;
         this.name = name;
     }
+
+    public static Comparator<Trigger> TriggerDateComparator = new Comparator<Trigger>() {
+        @Override
+        public int compare(Trigger o1, Trigger o2) {
+            int first = o1.datesOccurred.size();
+            int second = o2.datesOccurred.size();
+            return second-first;
+        }
+    };
 
     public int getId() {
         return id;

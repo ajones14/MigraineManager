@@ -2,13 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
     <div th:replace="fragments :: head"></div>
-    <script th:inline="javascript" th:src="@{/js/statsScript.js}"></script>
+    <script th:inline="javascript">
+        var triggerLabels = [[${triggerLabels}]];
+    </script>
+    <script th:src="@{/js/statsScript.js}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 </head>
 <body>
 <header th:replace="fragments :: header"></header>
 <div class="col-md-5">
-    <canvas id="myChart" width="400" height="400"></canvas>
+    <canvas id="myChart" height="200px"></canvas>
 </div>
 
 </body>

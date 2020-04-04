@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -38,8 +40,13 @@ public class StatsController {
 
         List<Trigger> triggerList = triggerRepository.findAllByUserId(currentUser.getId());
         //replace below with something that sorts by most frequent
-//        triggerList.sort(Comparator.comparing(Trigger::getName));
+        Collections.sort(triggerList, Trigger.TriggerDateComparator);
         model.addAttribute("triggerList", triggerList);
+        List<String> triggerLabels = new ArrayList<>();
+        for (Trigger trigger : triggerList) {
+            triggerLabels.add(trigger.getName());
+        }
+        model.addAttribute("triggerLabels", triggerLabels);
 
         List<Symptom> symptomList = symptomRepository.findAllByUserId(currentUser.getId());
 //        symptomList.sort(Comparator.comparing(Symptom::getName));
