@@ -7,6 +7,10 @@
         var triggerData = [[${triggerData}]];
         var symptomLabels = [[${symptomLabels}]];
         var symptomData = [[${symptomData}]];
+
+        var migraineDaysPerMonth = [[${migraineDaysPerMonth}]];
+        var migraineLabels = [[${migraineLabels}]];
+        var migraineFrequency = [[${migraineFrequency}]];
     </script>
     <script th:src="@{/js/statsScript.js}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
@@ -20,6 +24,9 @@
         </div>
         <div class="col-sm">
             <canvas id="symptomChart" height="160px" width="230px"></canvas>
+        </div>
+        <div class="col-sm">
+            <canvas id="migraineChart" height="160px" width="230px"></canvas>
         </div>
     </div>
 </div>

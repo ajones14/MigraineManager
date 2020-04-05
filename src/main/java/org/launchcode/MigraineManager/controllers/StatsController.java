@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Controller
 @RequestMapping("stats")
@@ -40,7 +41,6 @@ public class StatsController {
 
         List<Trigger> triggerList = triggerRepository.findAllByUserId(currentUser.getId());
         Collections.sort(triggerList, Trigger.TriggerDateComparator);
-        model.addAttribute("triggerList", triggerList);
         List<String> triggerLabels = new ArrayList<>();
         List<Integer> triggerData  = new ArrayList<>();
         for (Trigger trigger : triggerList) {
@@ -54,7 +54,6 @@ public class StatsController {
 
         List<Symptom> symptomList = symptomRepository.findAllByUserId(currentUser.getId());
         Collections.sort(symptomList, Symptom.SymptomDateComparator);
-        model.addAttribute("symptomList", symptomList);
         List<String> symptomLabels = new ArrayList<>();
         List<Integer> symptomData = new ArrayList<>();
         for (Symptom symptom : symptomList) {
@@ -67,7 +66,30 @@ public class StatsController {
         model.addAttribute("symptomData", symptomData);
 
         List<Migraine> migraineList = migraineRepository.findAllByUserId(currentUser.getId());
-        model.addAttribute("migraineList", migraineList);
+        if (migraineList.get(migraineList.size() - 1).getEndTime() == null) {
+            migraineList.remove(migraineList.size() - 1);
+        }
+        migraineList.sort(Comparator.comparing(Migraine::getStartTime));
+        HashMap<String, Integer> migraineDaysPerMonth = new LinkedHashMap<>();
+        HashMap<String, Integer> migraineData = new LinkedHashMap<>();
+        for (Migraine migraine : migraineList) {
+            long longDays = DAYS.between(migraine.getStartTime().toLocalDate(), migraine.getEndTime().toLocalDate()) + 1;
+            Integer daysBetween = Math.toIntExact(longDays);
+            if (migraineData.containsKey(migraine.getStartTime().format(DateTimeFormatter.ofPattern("MMMM uuuu")))) {
+                int count = migraineData.get(migraine.getStartTime().format(DateTimeFormatter.ofPattern("MMMM uuuu")));
+                migraineData.replace(migraine.getStartTime().format(DateTimeFormatter.ofPattern("MMMM uuuu")), count + 1);
+
+                Integer currentDays = migraineDaysPerMonth.get(migraine.getStartTime().format(DateTimeFormatter.ofPattern("MMMM uuuu")));
+                migraineDaysPerMonth.replace(migraine.getStartTime().format(DateTimeFormatter.ofPattern("MMMM uuuu")), currentDays + daysBetween);
+            } else {
+                migraineData.put(migraine.getStartTime().format(DateTimeFormatter.ofPattern("MMMM uuuu")), 1);
+                migraineDaysPerMonth.put(migraine.getStartTime().format(DateTimeFormatter.ofPattern("MMMM uuuu")), daysBetween);
+            }
+        }
+
+        model.addAttribute("migraineDaysPerMonth", migraineDaysPerMonth.values());
+        model.addAttribute("migraineLabels", migraineData.keySet());
+        model.addAttribute("migraineFrequency", migraineData.values());
 
         return "main/stats";
     }
