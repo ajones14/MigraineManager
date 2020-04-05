@@ -119,6 +119,14 @@ public class HomeController {
         }
     }
 
+    @PostMapping(value = "{date}/cancel")
+    public String cancelMigraine(@PathVariable("date") String date, @ModelAttribute("migraine") Migraine migraine, Model model, HttpSession session) {
+        User currentUser = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", currentUser);
+        migraineRepository.delete(migraine);
+        return "redirect:/home/{date}";
+    }
+
     @PostMapping(value = "{date}/saveTriggers")
     public String processSaveTriggerForm(HttpSession session, @PathVariable("date") String date, @RequestParam(value = "resultList", required = false) List<String> resultList) {
         User currentUser = authenticationController.getUserFromSession(session);

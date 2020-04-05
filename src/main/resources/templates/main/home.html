@@ -39,6 +39,10 @@
             <input hidden="hidden" th:name="migraine" th:value="${migraine}"/>
             <input disabled="true" type="submit" id="endMigraineButton" class="btn btn-info" value="End Migraine">
         </form>
+        <form class="migraineButton" method="post" th:action="@{/home/{date}/cancel(date=${date})}">
+            <input hidden="hidden" th:name="migraine" th:value="${migraine}"/>
+            <input disabled="true" type="submit" id="cancelMigraineButton" class="btn btn-info" value="Cancel Migraine">
+        </form>
 
         <div class="countup" id="countup1">
             <span class="timeel days">00</span>

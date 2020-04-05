@@ -4,7 +4,7 @@ height: 100%;
 
 body {
   font-size: 16px;
-  background: linear-gradient(to bottom, #a9efca 0%, #99ccff 100%);
+  background-color: #99ccff;
   height: 100%;
 }
 
@@ -141,11 +141,16 @@ body {
     text-decoration: none;
 }
 
-#startMigraineButton, #endMigraineButton {
+#startMigraineButton, #endMigraineButton, #cancelMigraineButton {
     display: inline-block;
     float: center;
     margin: 0 auto;
     width: 130px;
+    margin-top: 6px;
+}
+
+#cancelMigraineButton {
+    width: 140px;
 }
 
 .migraineButton {
