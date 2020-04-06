@@ -40,7 +40,6 @@ public class SymptomsController {
     public String processAddSymptomForm(HttpSession session, @ModelAttribute @Valid Symptom symptom, Errors errors, Model model) {
         User currentUser = authenticationController.getUserFromSession(session);
         symptom.setUserId(currentUser.getId());
-        //TODO check that symptom doesnt already exhist
         List<Symptom> symptomList = symptomRepository.findAllByUserId(currentUser.getId());
         symptomList.sort(Comparator.comparing(Symptom::getName));
         model.addAttribute("symptomList", symptomList);
@@ -52,6 +51,12 @@ public class SymptomsController {
             String str = symptom.getName();
             String capitalized = str.substring(0, 1).toUpperCase() + str.substring(1);
             symptom.setName(capitalized);
+            for (Symptom selection : symptomList) {
+                if (selection.getName().equals(symptom.getName())) {
+                    errors.rejectValue("name", "field.invalid", "Symptom already exists");
+                    return "main/symptoms";
+                }
+            }
         }
 
         symptomRepository.save(symptom);

@@ -5,57 +5,60 @@
 </head>
 <body>
 <header th:replace="fragments :: header"></header>
-
-<div class="login">
-    <div class="login-block">
-        <form method="post" action="?changeUsername">
-            <div class="form-group">
-                <label class="login-label">Change Username
-                    <input class="form-control" th:field="${preferencesFormDTO.username}" />
-                </label>
-                <p class="error" th:errors="${preferencesFormDTO.username}"></p>
+<div class="container">
+    <div class="row">
+        <div class="col-sm" style="text-align: right;">
+            <div class="login-block">
+                <form method="post" action="?changeUsername">
+                    <div class="form-group">
+                        <label class="login-label">Change Username
+                            <input class="form-control" th:field="${preferencesFormDTO.username}" />
+                        </label>
+                        <p class="error" th:errors="${preferencesFormDTO.username}"></p>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Update Username" />
+                </form>
+            </div><br>
+            <div class="login-block">
+                <form method="post" action="?changePassword">
+                    <div class="form-group">
+                        <label class="login-label">New Password
+                            <input class="form-control" th:field="${preferencesFormDTO.password}" type="password" />
+                        </label><br>
+                        <label class="login-label">Verify Password
+                            <input class="form-control" th:field="${preferencesFormDTO.verifyPassword}" type="password" />
+                        </label>
+                        <p class="error" th:errors="${preferencesFormDTO.password}"></p>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Update Password" />
+                </form>
             </div>
-            <input type="submit" class="btn btn-primary" value="Update Username" />
-        </form>
-    </div><br>
-    <div class="login-block">
-        <form method="post" action="?changePassword">
-            <div class="form-group">
-<!--                TODO add validation for old password-->
-                <label class="login-label">Change Password
-                    <input class="form-control" th:field="${preferencesFormDTO.password}" type="password" />
-                </label><br>
-                <label class="login-label">Verify Password
-                    <input class="form-control" th:field="${preferencesFormDTO.verifyPassword}" type="password" />
-                </label>
-                <p class="error" th:errors="${preferencesFormDTO.password}"></p>
+        </div>
+        <div class="col-sm">
+            <div class="login-block">
+                <form method="post" action="?changeFirstName">
+                    <div class="form-group">
+                        <label class="login-label">Change First Name
+                            <input class="form-control" th:field="${preferencesFormDTO.firstName}" />
+                        </label>
+                        <p class="error" th:errors="${preferencesFormDTO.firstName}"></p>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Update First Name" />
+                </form>
+            </div><br>
+            <div class="login-block">
+                <form method="post" action="?changeLastName">
+                    <div class="form-group">
+                        <label class="login-label">Change Last Name
+                            <input class="form-control" th:field="${preferencesFormDTO.lastName}" />
+                        </label>
+                        <p class="error" th:errors="${preferencesFormDTO.lastName}"></p>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Update Last Name" />
+                </form>
             </div>
-            <input type="submit" class="btn btn-primary" value="Update Password" />
-        </form>
-    </div><br>
-    <div class="login-block">
-        <form method="post" action="?changeFirstName">
-            <div class="form-group">
-                <label class="login-label">Change First Name
-                    <input class="form-control" th:field="${preferencesFormDTO.firstName}" />
-                </label>
-                <p class="error" th:errors="${preferencesFormDTO.firstName}"></p>
-            </div>
-            <input type="submit" class="btn btn-primary" value="Update First Name" />
-        </form>
-    </div><br>
-    <div class="login-block">
-        <form method="post" action="?changeLastName">
-            <div class="form-group">
-                <label class="login-label">Change Last Name
-                    <input class="form-control" th:field="${preferencesFormDTO.lastName}" />
-                </label>
-                <p class="error" th:errors="${preferencesFormDTO.lastName}"></p>
-            </div>
-            <input type="submit" class="btn btn-primary" value="Update Last Name" />
-        </form>
+        </div>
     </div>
 </div>
-
 </body>
 </html>

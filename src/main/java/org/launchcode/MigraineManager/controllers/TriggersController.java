@@ -40,7 +40,6 @@ public class TriggersController {
     public String processAddTriggerForm(HttpSession session, @ModelAttribute @Valid Trigger trigger, Errors errors, Model model) {
         User currentUser = authenticationController.getUserFromSession(session);
         trigger.setUserId(currentUser.getId());
-
         List<Trigger> triggerList = triggerRepository.findAllByUserId(currentUser.getId());
         triggerList.sort(Comparator.comparing(Trigger::getName));
         model.addAttribute("triggerList", triggerList);
@@ -52,6 +51,12 @@ public class TriggersController {
             String str = trigger.getName();
             String capitalized = str.substring(0, 1).toUpperCase() + str.substring(1);
             trigger.setName(capitalized);
+            for (Trigger selection : triggerList) {
+                if (selection.getName().equals(trigger.getName())) {
+                    errors.rejectValue("name", "field.invalid", "Trigger already exists");
+                    return "main/triggers";
+                }
+            }
         }
 
         triggerRepository.save(trigger);

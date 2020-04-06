@@ -5,7 +5,6 @@
 </head>
 <body>
 <header th:replace="fragments :: header"></header>
-<!--TODO add form-row and form-column classes to align buttons to the side -->
 <form method="post" action="?deleteSymptom" class="leftDiv" id="deleteForm">
     <ul class="list-group">
         <li id="hiddenList" class="list-group-item" th:each="symptom : ${symptomList}">
