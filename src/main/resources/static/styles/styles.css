@@ -4,7 +4,7 @@ height: 100%;
 
 body {
   font-size: 16px;
-  background-color: #99ccff;
+  background-color: #b8d7f5;
   height: 100%;
 }
 
@@ -59,14 +59,14 @@ body {
 }
 
 .checkbox:checked ~ .list-group-item {
-  background:#a7d4d4;
-  box-shadow:inset 1px 1px 1px #a7d4d4;
+  background: #60a8d6;
+  box-shadow:inset 1px 1px 1px #78beeb;
   color:#fff;
 }
 
 .list-group-item {
   padding: 8px;
-  background-color: #ccffff;
+  background-color: #9eccde;
   margin: 0px;
   cursor:pointer;
   -webkit-touch-callout: none;

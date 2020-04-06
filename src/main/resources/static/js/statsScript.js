@@ -40,8 +40,8 @@ function init () {
             datasets: [{
                 label: '# of Symptom Occurrences',
                 data: symptomData,
-                backgroundColor: 'rgba(75, 192, 192, 0.4)',
-                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 141, 0.4)',
+                borderColor: 'rgba(75, 192, 141, 1)',
                 borderWidth: 1
             }]
         },

@@ -5,6 +5,7 @@
     <script th:inline="javascript">
         var triggerLabels = [[${triggerLabels}]];
         var triggerData = [[${triggerData}]];
+
         var symptomLabels = [[${symptomLabels}]];
         var symptomData = [[${symptomData}]];
 
@@ -18,15 +19,15 @@
 <body>
 <header th:replace="fragments :: header"></header>
 <div class="container">
-    <div class="row">
+    <div class="row" style="margin-top: 20px;">
         <div class="col-sm">
-            <canvas id="triggerChart" height="160px" width="230px"></canvas>
+            <canvas id="triggerChart" height="200px" width="230px"></canvas>
         </div>
         <div class="col-sm">
-            <canvas id="symptomChart" height="160px" width="230px"></canvas>
+            <canvas id="symptomChart" height="200px" width="230px"></canvas>
         </div>
         <div class="col-sm">
-            <canvas id="migraineChart" height="160px" width="230px"></canvas>
+            <canvas id="migraineChart" height="200px" width="230px"></canvas>
         </div>
     </div>
 </div>
