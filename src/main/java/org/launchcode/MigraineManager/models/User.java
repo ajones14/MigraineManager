@@ -6,6 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
 
 @Entity
 public class User {
@@ -23,6 +24,9 @@ public class User {
     @NotNull
     private String username;
 
+    @Size(max = 5, min = 5, message="Please enter a valid 5 digit zip code")
+    private String zipCode;
+
     @NotNull
     private String pwHash;
 
@@ -30,11 +34,20 @@ public class User {
 
     public User() {}
 
-    public User(String firstName, String lastName, String username, String password) {
+    public User(String firstName, String lastName, String username, String password, String zipCode) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.pwHash = encoder.encode(password);
+        this.zipCode = zipCode;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
     public int getId() {

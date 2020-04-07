@@ -24,6 +24,12 @@
             <p class="error" th:errors="${registerFormDTO.lastName}"></p>
         </div>
         <div class="form-group">
+            <label class="login-label">Zip Code
+                <input class="form-control" th:field="${registerFormDTO.zipCode}" />
+            </label>
+            <p class="error" th:errors="${registerFormDTO.zipCode}"></p>
+        </div>
+        <div class="form-group">
             <label class="login-label">Username
                 <input class="form-control" th:field="${registerFormDTO.username}" />
             </label>
