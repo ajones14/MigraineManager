@@ -56,6 +56,17 @@
                     </div>
                     <input type="submit" class="btn btn-primary" value="Update Last Name" />
                 </form>
+            </div><br>
+            <div class="login-block">
+                <form method="post" action="?changeZipCode">
+                    <div class="form-group">
+                        <label class="login-label">Update Zip Code
+                            <input class="form-control" th:field="${preferencesFormDTO.zipCode}" />
+                        </label>
+                        <p class="error" th:errors="${preferencesFormDTO.zipCode}"></p>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Save Zip Code" />
+                </form>
             </div>
         </div>
     </div>

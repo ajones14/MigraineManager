@@ -97,4 +97,23 @@ public class PreferencesController {
         return "redirect:/preferences";
     }
 
+    @PostMapping(params = "changeZipCode")
+    public String processChangeZipCode(HttpSession session, @ModelAttribute @Valid PreferencesFormDTO preferencesFormDTO, Errors errors) {
+        User currentUser = authenticationController.getUserFromSession(session);
+        String zipCode = preferencesFormDTO.getZipCode();
+
+        String regex = "\\d+";
+        if (zipCode.isEmpty()) {
+            errors.rejectValue("zipCode", "field.empty", "Please enter a valid zip code");
+            return "main/preferences";
+        } else if (zipCode.length() != 5 || !(zipCode.matches(regex))) {
+            errors.rejectValue("zipCode", "field.invalid", "Please enter a 5 digit zip code");
+            return "main/preferences";
+        }
+
+        currentUser.setZipCode(zipCode);
+        userRepository.save(currentUser);
+        return "redirect:/preferences";
+    }
+
 }

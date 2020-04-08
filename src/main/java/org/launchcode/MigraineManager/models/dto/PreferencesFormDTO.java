@@ -12,6 +12,16 @@ public class PreferencesFormDTO {
 
     private String lastName;
 
+    private String zipCode;
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
     public String getUsername() {
         return username;
     }
