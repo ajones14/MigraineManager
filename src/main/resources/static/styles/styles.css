@@ -190,3 +190,13 @@ body {
   color: black;
 }
 
+#weather {
+    width: auto;
+    text-align: center;
+    margin: 40px 20px;
+    border-style: outset;
+    border-radius: 8px;
+    border-color: #9eccde;
+    background-color: #a3d3e6;
+}
+

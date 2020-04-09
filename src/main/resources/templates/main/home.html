@@ -54,6 +54,16 @@
             <span class="timeel seconds">00</span>
             <span class="timeel timeRefSeconds">seconds</span>
         </div>
+        <div id="weather" class="container">
+            <h3><!-- th:text="'Weather for ' + ${weather.getName() + ', ' + ${weather.getRegion()}" -->Weather for House Springs, Missouri</h3>
+            <div class="row" style="display: inline-flex;">
+                <img src="http://cdn.weatherapi.com/weather/64x64/day/119.png"/>
+                <h5><!-- th:text="${weather.getTemperature()}" -->68 F<!-- th:text="${weather.getWind()} + ' mph wind'" -->   23 mph wind</h5>
+            </div>
+            <div class="row" style="display: inline-flex;">
+                <h5><!-- th:text="'Humidity: ' + ${weather.getHumidity()} + '%'"-->Humidity: 34%<!--th:text="'Pressure: ' + ${weather.getPressure()}"-->   Pressure: 30.3</h5>
+            </div>
+        </div>
 
     </div>
 
