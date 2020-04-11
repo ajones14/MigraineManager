@@ -9,6 +9,11 @@ public class Forecast {
 
     public Forecast() { }
 
+    @Override
+    public String toString() {
+        return "Forecast Day: " + forecastday.toString();
+    }
+
     public ForecastDay[] getForecastDay() {
         return forecastday;
     }

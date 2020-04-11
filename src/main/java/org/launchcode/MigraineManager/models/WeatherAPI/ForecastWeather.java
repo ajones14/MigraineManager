@@ -9,6 +9,11 @@ public class ForecastWeather extends HistoryWeather {
 
     public ForecastWeather() { }
 
+    @Override
+    public String toString() {
+        return "Current: " + current.toString();
+    }
+
     public Current getCurrent() {
         return current;
     }

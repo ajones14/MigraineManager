@@ -15,6 +15,12 @@ public class Day {
 
     public Day() { }
 
+    @Override
+    public String toString() {
+        return "Temp: " + this.avgtemp_f + "\nWind: " + this.maxwind_mph + "\nHumidity: " +
+                this.avghumidity + "\nCondition: " + this.condition.toString();
+    }
+
     public double getAvgtemp_f() {
         return avgtemp_f;
     }

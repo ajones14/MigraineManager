@@ -17,6 +17,12 @@ public class Current {
 
     public Current() { }
 
+    @Override
+    public String toString() {
+        return "Temp: " + this.temp_f + "\nWind: " + this.wind_mph +
+                "\nPressure: " + this.pressure_in + "\nHumidity: " + this.humidity + "\nCondition: " + this.condition.toString();
+    }
+
     public double getTemp_f() {
         return temp_f;
     }

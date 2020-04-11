@@ -11,6 +11,11 @@ public class Hour {
 
     public Hour() { }
 
+    @Override
+    public String toString() {
+        return "Time: " + this.time + "\nPressure: " + this.pressure_in;
+    }
+
     public String getTime() {
         return time;
     }

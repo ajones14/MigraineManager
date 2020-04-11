@@ -11,6 +11,11 @@ public class HistoryWeather {
 
     public HistoryWeather() { }
 
+    @Override
+    public String toString() {
+        return "Location: " + this.location + "\nForecast: " + this.forecast.toString();
+    }
+
     public Location getLocation() {
         return location;
     }

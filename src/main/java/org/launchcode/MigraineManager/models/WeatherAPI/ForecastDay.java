@@ -10,6 +10,15 @@ public class ForecastDay {
 
     public ForecastDay() { }
 
+    @Override
+    public String toString() {
+        String result = "";
+        for (Hour item : this.hour) {
+            result += item.toString();
+        }
+        return "Date: " + this.date + "\nDay: " + this.day.toString() + "\nHour: " + result;
+    }
+
     public double calculateAveragePressure() {
         double total = 0;
         for (int i = 0; i < hour.length; i++) {

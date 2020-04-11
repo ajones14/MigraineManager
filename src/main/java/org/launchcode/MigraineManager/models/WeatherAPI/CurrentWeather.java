@@ -15,6 +15,11 @@ public class CurrentWeather {
         return location;
     }
 
+    @Override
+    public String toString() {
+        return "Location: " + this.location.toString() + "\nCurrent: " + this.current.toString();
+    }
+
     public void setLocation(Location location) {
         this.location = location;
     }

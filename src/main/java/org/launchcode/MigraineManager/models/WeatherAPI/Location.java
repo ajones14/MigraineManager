@@ -11,6 +11,11 @@ public class Location {
 
     public Location() { }
 
+    @Override
+    public String toString() {
+        return "Name: " + this.name + "\nRegion: " + this.region;
+    }
+
     public String getName() {
         return name;
     }

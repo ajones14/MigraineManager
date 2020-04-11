@@ -11,6 +11,11 @@ public class Condition {
 
     public Condition() { }
 
+    @Override
+    public String toString() {
+        return "Condition: " + this.text;
+    }
+
     public String getText() {
         return text;
     }
