@@ -1,12 +1,14 @@
 package org.launchcode.MigraineManager.models.WeatherAPI;
 
+import java.util.List;
+
 public class ForecastDay {
 
     private String date;
 
     private Day day;
 
-    private Hour[] hour;
+    private List<Hour> hour;
 
     public ForecastDay() { }
 
@@ -21,10 +23,10 @@ public class ForecastDay {
 
     public double calculateAveragePressure() {
         double total = 0;
-        for (int i = 0; i < hour.length; i++) {
-            total += hour[i].getPressure_in();
+        for (int i = 0; i < hour.size(); i++) {
+            total += hour.get(i).getPressure_in();
         }
-        return total/hour.length;
+        return Math.round(total/hour.size() * 10)/10;
     }
 
     public String getDate() {
@@ -43,11 +45,11 @@ public class ForecastDay {
         this.day = day;
     }
 
-    public Hour[] getHour() {
+    public List<Hour> getHour() {
         return hour;
     }
 
-    public void setHour(Hour[] hour) {
+    public void setHour(List<Hour> hour) {
         this.hour = hour;
     }
 }
