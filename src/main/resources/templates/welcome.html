@@ -3,7 +3,7 @@
 <head>
     <div th:replace="fragments :: head"></div>
     <style>
-        h3, h5 {
+        h3, h4, h5 {
             color: #2a5278;
         }
         .col-md {
@@ -21,12 +21,18 @@
             width: 100%;
             margin: 15px 0;
         }
+        .form-group {
+            margin: 0px;
+        }
+        .form-control, .login-label, textarea {
+            width: 100%;
+        }
     </style>
 </head>
-<body class="container" style="background-color: #d9e1ff">
+<body class="container" style="background-color: #d9edff">
 <div class="row" style="padding: 0; border-style: hidden;">
     <div class="col-sm-12">
-        <nav class="navbar navbar-expand-sm navbar-light" style="float: right; background-color: #cfd9e3; margin-top: 15px;">
+        <nav class="navbar navbar-expand-sm navbar-light" style="float: right; background-color: #d5e3f0; margin-top: 15px;">
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href=#features>Features</a>
@@ -72,8 +78,29 @@
         <img th:src="@{images/migraineChart.png}"/>
     </div>
 </div>
-<div class="row" id="contact" style="border-bottom-style: hidden;">
-
+<div class="row justify-content-center" id="contact" style="border-bottom-style: hidden;">
+    <div class="col-sm-6">
+        <h4>Have any questions or comments? Please send us an email at MyMigraineManager@gmail.com or fill out the
+            information below and we would be happy to assist you!</h4>
+        <form method="post">
+            <div class="form-group">
+                <label class="login-label">Name:
+                    <input class="form-control" th:field="${feedbackFormDTO.name}">
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="login-label">Email Address:
+                    <input class="form-control" th:field="${feedbackFormDTO.email}">
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="login-label">Message:
+                    <textarea style="height: 200px;" class="form-control" th:field="${feedbackFormDTO.message}"></textarea>
+                </label>
+            </div>
+            <input style="float: right;" type="submit" class="btn btn-primary" value="Send" />
+        </form>
+    </div>
 </div>
 </body>
 </html>

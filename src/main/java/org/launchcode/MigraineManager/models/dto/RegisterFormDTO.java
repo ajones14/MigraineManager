@@ -1,17 +1,13 @@
 package org.launchcode.MigraineManager.models.dto;
 
-import com.sun.istack.NotNull;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 public class RegisterFormDTO extends LoginFormDTO {
 
-    @NotNull
     @NotBlank
     private String firstName;
 
-    @NotNull
     @NotBlank
     private String lastName;
 
