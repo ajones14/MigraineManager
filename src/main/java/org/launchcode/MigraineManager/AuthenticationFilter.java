@@ -16,7 +16,7 @@ import java.util.List;
 public class AuthenticationFilter extends HandlerInterceptorAdapter {
 
     //private String[] whitelist = new String[]{"/login", "/register"};
-    private static final List<String> whitelist = Arrays.asList("/login", "/register", "/logout", "/images", "/styles");
+    private static final List<String> whitelist = Arrays.asList("/welcome", "/login", "/register", "/logout", "/images", "/styles");
 
     @Autowired
     UserRepository userRepository;
@@ -52,7 +52,7 @@ public class AuthenticationFilter extends HandlerInterceptorAdapter {
         }
 
         // The user is NOT logged in
-        response.sendRedirect("/login");
+        response.sendRedirect("/welcome");
         return false;
     }
 
