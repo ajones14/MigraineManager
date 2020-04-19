@@ -80,24 +80,30 @@
 </div>
 <div class="row justify-content-center" id="contact" style="border-bottom-style: hidden;">
     <div class="col-sm-6">
-        <h4>Have any questions or comments? Please send us an email at MyMigraineManager@gmail.com or fill out the
-            information below and we would be happy to assist you!</h4>
-        <form method="post">
+        <h4 style="margin-bottom: 20px;">Have any questions or comments? Please send us an email at MyMigraineManager@gmail.com
+            or fill out the information below and we would be happy to assist you!</h4>
+        <form method="post" action="/welcome#contact">
+            <div th:if="${success}">
+                <h5>Thank you, your message has been sent!</h5>
+            </div>
             <div class="form-group">
                 <label class="login-label">Name:
                     <input class="form-control" th:field="${feedbackFormDTO.name}">
                 </label>
             </div>
+            <p class="error" th:errors="${feedbackFormDTO.name}"></p>
             <div class="form-group">
                 <label class="login-label">Email Address:
                     <input class="form-control" th:field="${feedbackFormDTO.email}">
                 </label>
             </div>
+            <p class="error" th:errors="${feedbackFormDTO.email}"></p>
             <div class="form-group">
                 <label class="login-label">Message:
                     <textarea style="height: 200px;" class="form-control" th:field="${feedbackFormDTO.message}"></textarea>
                 </label>
             </div>
+            <p class="error" th:errors="${feedbackFormDTO.message}"></p>
             <input style="float: right;" type="submit" class="btn btn-primary" value="Send" />
         </form>
     </div>
