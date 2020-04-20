@@ -22,6 +22,9 @@ import java.util.Optional;
 public class AuthenticationController {
 
     @Autowired
+    private HomeController homeController;
+
+    @Autowired
     private TriggerRepository triggerRepository;
 
     @Autowired
@@ -77,6 +80,11 @@ public class AuthenticationController {
         String verifyPassword = registerFormDTO.getVerifyPassword();
         if (!password.equals(verifyPassword)) {
             errors.rejectValue("password", "passwords.mismatch", "Passwords do not match");
+            return "register";
+        }
+
+        if (homeController.testZipIsInvalid(homeController.weatherAPIKey, registerFormDTO.getZipCode())) {
+            errors.rejectValue("zipCode", "field.invalid", "Please enter a valid zip code");
             return "register";
         }
 

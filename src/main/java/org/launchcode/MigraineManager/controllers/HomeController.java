@@ -10,6 +10,7 @@ import org.launchcode.MigraineManager.models.User;
 import org.launchcode.MigraineManager.models.WeatherAPI.*;
 import org.launchcode.MigraineManager.models.dto.WeatherDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +43,7 @@ public class HomeController {
     @Autowired
     private SymptomRepository symptomRepository;
 
-    private final String weatherAPIKey = "63a9401b41ae4b5da5a74736200604";
+    public final String weatherAPIKey = "63a9401b41ae4b5da5a74736200604";
 
     private CurrentWeather callWeatherAPICurrentDay(String key, String zip) {
         RestTemplate restTemplate = new RestTemplate();
@@ -54,15 +55,19 @@ public class HomeController {
     private HistoryWeather callWeatherAPIPastDay(String key, String zip, String date) {
         RestTemplate restTemplate = new RestTemplate();
         HistoryWeather historyWeather = restTemplate.getForObject("http://api.weatherapi.com/v1/history.json?key=" + key + "&q=" + zip + "&dt=" + date, HistoryWeather.class);
-        System.out.println(historyWeather.toString());
         return historyWeather;
     }
 
     private ForecastWeather callWeatherAPIFutureDay(String key, String zip) {
         RestTemplate restTemplate = new RestTemplate();
         ForecastWeather forecastWeather = restTemplate.getForObject("http://api.weatherapi.com/v1/forecast.json?key=" + key + "&q=" + zip + "&days=3", ForecastWeather.class);
-        System.out.println(forecastWeather);
         return forecastWeather;
+    }
+
+    public boolean testZipIsInvalid(String key, String zip) {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.getForEntity("http://api.weatherapi.com/v1/search.json?key=" + key + "&q=" + zip, String.class);
+        return response.getBody().equals("[]");
     }
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-uuuu");

@@ -20,6 +20,9 @@ import javax.validation.Valid;
 public class PreferencesController {
 
     @Autowired
+    private HomeController homeController;
+
+    @Autowired
     private AuthenticationController authenticationController;
 
     @Autowired
@@ -108,6 +111,9 @@ public class PreferencesController {
             return "main/preferences";
         } else if (zipCode.length() != 5 || !(zipCode.matches(regex))) {
             errors.rejectValue("zipCode", "field.invalid", "Please enter a 5 digit zip code");
+            return "main/preferences";
+        } else if (homeController.testZipIsInvalid(homeController.weatherAPIKey, zipCode)) {
+            errors.rejectValue("zipCode", "field.invalid", "Please enter a valid zip code");
             return "main/preferences";
         }
 
