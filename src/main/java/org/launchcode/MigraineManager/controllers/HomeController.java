@@ -7,9 +7,8 @@ import org.launchcode.MigraineManager.models.Migraine;
 import org.launchcode.MigraineManager.models.Symptom;
 import org.launchcode.MigraineManager.models.Trigger;
 import org.launchcode.MigraineManager.models.User;
-import org.launchcode.MigraineManager.models.WeatherAPI.CurrentWeather;
-import org.launchcode.MigraineManager.models.WeatherAPI.ForecastWeather;
-import org.launchcode.MigraineManager.models.WeatherAPI.HistoryWeather;
+import org.launchcode.MigraineManager.models.WeatherAPI.*;
+import org.launchcode.MigraineManager.models.dto.WeatherDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -87,31 +86,23 @@ public class HomeController {
 
         if (todaydate.equals(date)) {
             CurrentWeather currentWeather = callWeatherAPICurrentDay(weatherAPIKey, currentUser.getZipCode());
-            model.addAttribute("city", currentWeather.getLocation().getName());
-            model.addAttribute("state", currentWeather.getLocation().getRegion());
-            model.addAttribute("temperature", currentWeather.getCurrent().getTemp_f());
-            model.addAttribute("wind", currentWeather.getCurrent().getWind_mph());
-            model.addAttribute("humidity", currentWeather.getCurrent().getHumidity());
-            model.addAttribute("pressure", currentWeather.getCurrent().getPressure_in());
-            model.addAttribute("icon", currentWeather.getCurrent().getCondition().getIcon());
+            Current current = currentWeather.getCurrent();
+            WeatherDTO weatherDTO = new WeatherDTO(currentWeather.getLocation().getName(), currentWeather.getLocation().getRegion(),
+                    current.getTemp_f(), current.getWind_mph(), current.getHumidity(), current.getPressure_in(), current.getCondition().getIcon());
+            model.addAttribute("weatherDTO", weatherDTO);
         } else if (newDate.compareTo(LocalDate.now()) > 0 && newDate.compareTo(LocalDate.now()) <= 3) {
             ForecastWeather forecastWeather = callWeatherAPIFutureDay(weatherAPIKey, currentUser.getZipCode());
-            model.addAttribute("city", forecastWeather.getLocation().getName());
-            model.addAttribute("state", forecastWeather.getLocation().getRegion());
-            model.addAttribute("temperature", forecastWeather.getForecast().getSelectedForecastday(newDate.format(callFormatter)).getDay().getAvgtemp_f());
-            model.addAttribute("wind", forecastWeather.getForecast().getSelectedForecastday(newDate.format(callFormatter)).getDay().getMaxwind_mph());
-            model.addAttribute("humidity", forecastWeather.getForecast().getSelectedForecastday(newDate.format(callFormatter)).getDay().getAvghumidity());
-            model.addAttribute("pressure", "N/A");
-            model.addAttribute("icon", forecastWeather.getForecast().getSelectedForecastday(newDate.format(callFormatter)).getDay().getCondition().getIcon());
+            Day day = forecastWeather.getForecast().getSelectedForecastday(newDate.format(callFormatter)).getDay();
+            WeatherDTO weatherDTO = new WeatherDTO(forecastWeather.getLocation().getName(), forecastWeather.getLocation().getRegion(),
+                    day.getAvgtemp_f(), day.getMaxwind_mph(), day.getAvghumidity(), 0, day.getCondition().getIcon());
+            model.addAttribute("weatherDTO", weatherDTO);
         } else if (newDate.compareTo(LocalDate.now()) >= -6 && newDate.compareTo(LocalDate.now()) < 0) {
             HistoryWeather historyWeather = callWeatherAPIPastDay(weatherAPIKey, currentUser.getZipCode(), newDate.format(callFormatter));
-            model.addAttribute("city", historyWeather.getLocation().getName());
-            model.addAttribute("state", historyWeather.getLocation().getRegion());
-            model.addAttribute("temperature", historyWeather.getForecast().getForecastday().get(0).getDay().getAvgtemp_f());
-            model.addAttribute("wind", historyWeather.getForecast().getForecastday().get(0).getDay().getMaxwind_mph());
-            model.addAttribute("humidity", historyWeather.getForecast().getForecastday().get(0).getDay().getAvghumidity());
-            model.addAttribute("pressure", historyWeather.getForecast().getForecastday().get(0).calculateAveragePressure());
-            model.addAttribute("icon", historyWeather.getForecast().getForecastday().get(0).getDay().getCondition().getIcon());
+            Day day = historyWeather.getForecast().getForecastday().get(0).getDay();
+            WeatherDTO weatherDTO = new WeatherDTO(historyWeather.getLocation().getName(), historyWeather.getLocation().getRegion(),
+                    day.getAvgtemp_f(), day.getMaxwind_mph(), day.getAvghumidity(),
+                    historyWeather.getForecast().getForecastday().get(0).calculateAveragePressure(),  day.getCondition().getIcon());
+            model.addAttribute("weatherDTO", weatherDTO);
         } else {
             model.addAttribute("message", "Weather for " + currentUser.getZipCode() + " not available for selected date");
         }
@@ -119,6 +110,7 @@ public class HomeController {
         List<Migraine> migraineList = migraineRepository.findAllByUserId(currentUser.getId());
         if (migraineList == null || migraineList.isEmpty()) {
             session.setAttribute("migraine", new Migraine());
+            model.addAttribute("migraine", null);
         } else {
             for (Migraine migraine : migraineList) {
                 if (migraine.getEndTime() == null) {

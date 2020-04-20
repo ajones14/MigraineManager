@@ -58,13 +58,13 @@
             <div th:if="${message}" th:text="${message}">
             </div>
             <div th:unless="${message}">
-                <h3 th:text="${'Weather for ' + city + ', ' + state}"></h3>
+                <h3 th:text="${'Weather for ' + weatherDTO.city + ', ' + weatherDTO.state}"></h3>
                 <div class="row" style="display: inline-flex;">
-                    <img th:src="${icon}"/>
-                    <h5 th:text="${temperature + 'F ' + wind + 'mph wind'}"></h5>
+                    <img th:src="${weatherDTO.icon}"/>
+                    <h5 th:text="${weatherDTO.temperature + 'F ' + weatherDTO.wind + 'mph wind'}"></h5>
                 </div>
                 <div class="row" style="display: inline-flex;">
-                    <h5 th:text="${'Humidity: ' + humidity + '% Pressure: ' + pressure}"></h5>
+                    <h5 th:text="${'Humidity: ' + weatherDTO.humidity + '% Pressure: ' + weatherDTO.pressure}"></h5>
                 </div><br>
                 Powered by <a href="https://www.weatherapi.com/" title="Free Weather API">WeatherAPI.com</a>
             </div>
