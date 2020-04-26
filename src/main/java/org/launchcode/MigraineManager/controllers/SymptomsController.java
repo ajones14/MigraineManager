@@ -50,9 +50,9 @@ public class SymptomsController {
         } else {
             String str = symptom.getName();
             String capitalized = str.substring(0, 1).toUpperCase() + str.substring(1);
-            symptom.setName(capitalized);
+            symptom.setName(capitalized.trim());
             for (Symptom selection : symptomList) {
-                if (selection.getName().equals(symptom.getName())) {
+                if (selection.getName().equals(symptom.getName().trim())) {
                     errors.rejectValue("name", "field.invalid", "Symptom already exists");
                     return "main/symptoms";
                 }

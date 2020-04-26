@@ -50,7 +50,7 @@ public class TriggersController {
         } else {
             String str = trigger.getName();
             String capitalized = str.substring(0, 1).toUpperCase() + str.substring(1);
-            trigger.setName(capitalized);
+            trigger.setName(capitalized.trim());
             for (Trigger selection : triggerList) {
                 if (selection.getName().equals(trigger.getName())) {
                     errors.rejectValue("name", "field.invalid", "Trigger already exists");
@@ -65,19 +65,19 @@ public class TriggersController {
 
 
     @PostMapping(params = "deleteTrigger")
-    public String processDeleteTriggerForm(HttpSession session, @RequestParam(value = "resultList", required = false) List<String> resultList) {
+    public String processDeleteTriggerForm(HttpSession session, @RequestParam(value = "resultList", required = false) List<String> selectedTriggers) {
         try {
             User currentUser = authenticationController.getUserFromSession(session);
-            List<Trigger> triggerList = triggerRepository.findAllByUserId(currentUser.getId());
+            List<Trigger> triggersForUser = triggerRepository.findAllByUserId(currentUser.getId());
 
-            if (resultList == null || resultList.isEmpty()) {
+            if (selectedTriggers == null || selectedTriggers.isEmpty()) {
                 return "redirect:/triggers";
             }
 
-            for (String result : resultList) {
-                for (Trigger trigger : triggerList) {
-                    if (result.equals(trigger.getName())) {
-                        triggerRepository.delete(trigger);
+            for (String selectedTrigger : selectedTriggers) {
+                for (Trigger userTrigger : triggersForUser) {
+                    if (selectedTrigger.trim().equals(userTrigger.getName().trim())) {
+                        triggerRepository.delete(userTrigger);
                     }
                 }
             }
