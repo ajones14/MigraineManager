@@ -111,7 +111,8 @@ public class AuthenticationController {
             triggerRepository.save(trigger);
         }
 
-        return "redirect:/home";
+        //return "redirect:/home";
+        return "redirect:/login-success";
     }
 
     @GetMapping("/login")
@@ -143,7 +144,13 @@ public class AuthenticationController {
             return "login";
         }
         setUserInSession(request.getSession(), theUser);
-        return "redirect:/home";
+        //return "redirect:/home";
+        return "redirect:/login-success";
+    }
+
+    @GetMapping("/login-success")
+    public String loginSuccess() {
+        return "login-success";
     }
 
     @GetMapping("/logout")
